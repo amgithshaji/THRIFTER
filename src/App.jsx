@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+
 import './App.css'
 
 import PreLoader from './component/PreLoader'
