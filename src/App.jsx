@@ -5,6 +5,11 @@ import './App.css'
 import PreLoader from './component/PreLoader'
 import { useEffect, useState } from 'react'
 import Home from './users/pages/Home'
+import ClothDetails from './users/pages/ClothDetails'
+import Cloth from './users/pages/Cloth'
+import Seller from './users/pages/Seller'
+import Profile from './users/pages/Profile'
+
 
 function App() {
   const [loader, setLoader] = useState(true)
@@ -38,6 +43,11 @@ function App() {
             }
           </div>
         } />
+        <Route path='clothdetails' element={<ClothDetails/>} />
+        <Route path='cloth' element={<Cloth/>} />
+        <Route path='seller' element={<Seller/>} />
+        <Route path='profile' element={<Profile/>} />
+
     </Routes>
   )
 }

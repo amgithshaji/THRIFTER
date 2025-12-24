@@ -12,10 +12,10 @@ const techLogos = [
 // Alternative with image sources
 const imageLogos = [
   { src: "/logoloop1.png", alt: "Company 1", href: "https://company1.com" },
-  { src: "/logoloop2.png", alt: "Company 1", href: "https://company1.com" },
-  { src: "/logoloop3.png", alt: "Company 1", href: "https://company1.com" },
-  { src: "/logoloop4.png", alt: "Company 1", href: "https://company1.com" },
-  { src: "/logoloop5.png", alt: "Company 1", href: "https://company1.com" },
+  // { src: "/logoloop2.png", alt: "Company 1", href: "https://company1.com" },
+  // { src: "/logoloop3.png", alt: "Company 1", href: "https://company1.com" },
+  // { src: "/logoloop4.png", alt: "Company 1", href: "https://company1.com" },
+  // { src: "/logoloop5.png", alt: "Company 1", href: "https://company1.com" },
 
 
 ];
@@ -23,14 +23,15 @@ const imageLogos = [
 function Logo() {
   return (
     <div>
-        <div style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
+        <div style={{ height: '100px', position: 'relative', overflow: 'hidden'}}>
       {/* Basic horizontal loop */}
       <LogoLoop
-        logos={techLogos}
+         
+        logos={imageLogos}
         speed={120}
         direction="left"
-        logoHeight={45}
-        gap={80}
+        logoHeight={85}
+        gap={100}
         hoverSpeed={0}
         scaleOnHover
         fadeOut

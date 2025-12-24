@@ -1,6 +1,9 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 // import './StaggeredMenu.css';
+import { IoIosSearch } from "react-icons/io";
+import { Link } from 'react-router-dom';
+
 
 export const StaggeredMenu = ({
   position = 'right',
@@ -364,6 +367,32 @@ export const StaggeredMenu = ({
           return arr.map((c, i) => <div key={i} className="sm-prelayer" style={{ background: c }} />);
         })()}
       </div>
+
+       {/* searching */}
+       <div className=" md:py-2 md:mt-11 mt-2 relative z-50 md:ms-300 pointer-events-auto">
+
+  <input
+    type="text"
+    placeholder="SEARCH"
+    className="hidden sm:block  bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-6"
+  />
+
+  {/* underline */}
+  <div className="hidden sm:block h-px w-45 bg-black"></div>
+
+  {/* search icon link */}
+  <Link
+    to="/cloth"
+    className="absolute  top-1  w-8 h-8 cursor-pointer"
+  >
+    {/* <IoIosSearch className="hidden sm:block text-base " /> */}
+    <IoIosSearch className="block sm:hidden text-xl mt-11 md:ms-1 ms-65" />
+  </Link>
+
+</div>
+
+
+
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <div className="sm-logo" aria-label="Logo">
           <img
@@ -375,6 +404,9 @@ export const StaggeredMenu = ({
             height={24}
           />
         </div>
+
+  
+
         <button
           ref={toggleBtnRef}
           className="sm-toggle"
@@ -399,6 +431,7 @@ export const StaggeredMenu = ({
           </span>
         </button>
       </header>
+      
 
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
         <div className="sm-panel-inner">
