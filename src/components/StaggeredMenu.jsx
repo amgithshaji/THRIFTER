@@ -3,9 +3,12 @@ import { gsap } from 'gsap';
 // import './StaggeredMenu.css';
 import { IoIosSearch } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import { BiShoppingBag } from "react-icons/bi";
+import { IoHeartOutline } from "react-icons/io5";
 
 
 export const StaggeredMenu = ({
+  insideclothsearch,
   position = 'right',
   colors = ['#B19EEF', '#5227FF'],
   items = [],
@@ -369,27 +372,67 @@ export const StaggeredMenu = ({
       </div>
 
        {/* searching */}
-       <div className=" md:py-2 md:mt-11 mt-2 relative z-50 md:ms-300 pointer-events-auto">
+       <div className=" md:py-2 md:mt-12 mt-2 relative z-50 md:ms-270 pointer-events-auto">
 
-  <input
-    type="text"
-    placeholder="SEARCH"
-    className="hidden sm:block  bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-6"
-  />
 
-  {/* underline */}
-  <div className="hidden sm:block h-px w-45 bg-black"></div>
+  
+      <input
+      type="text"
+      placeholder="SEARCH"
+      className="hidden sm:block  bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-6"
+    />
+  
+    <div className="hidden sm:block h-px w-45 bg-black"></div>
+  
+  
+      <Link
+        to="/cloth"
+        className="absolute  top-1  w-8 h-8 cursor-pointer"
+      >
+        <IoIosSearch className="block sm:hidden text-xl mt-10 md:ms-1 ms-65" />
+      </Link>
+ 
 
-  {/* search icon link */}
+  
+
+
+{/* login btn */}
+
+       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-53 pointer-events-auto">
   <Link
-    to="/cloth"
+    to="/login"
     className="absolute  top-1  w-8 h-8 cursor-pointer"
   >
-    {/* <IoIosSearch className="hidden sm:block text-base " /> */}
-    <IoIosSearch className="block sm:hidden text-xl mt-11 md:ms-1 ms-65" />
+    <p className="text-xs mt-2 md:ms-1 ms-65 uppercase" >
+      login</p> 
   </Link>
-
 </div>
+{/* wishlist */}
+       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-50 pointer-events-auto">
+  <Link
+    to="/login"
+    className="absolute  top-1  w-8 h-8 cursor-pointer"
+  >
+    <p className="text-[18px] mt-1 md:ms-20 ms-86 uppercase" >
+      <IoHeartOutline /></p> 
+  </Link>
+</div>
+{/* shoppingbag*/}
+       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-60 pointer-events-auto">
+  <Link
+    to="/login"
+    className="absolute  top-1  w-8 h-8 cursor-pointer"
+  >
+    <p className="text-[18px] mt-1 md:ms-20 ms-78 uppercase" >
+      <BiShoppingBag /></p> 
+  </Link>
+</div>
+</div>
+
+
+
+
+
 
 
 

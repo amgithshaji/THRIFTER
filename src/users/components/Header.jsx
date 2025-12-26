@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
     { label: 'Profile', ariaLabel: 'View our services', link: '/profile' },
-    { label: 'Login', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'logout', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 
   const socialItems = [
@@ -31,6 +31,7 @@ function Header() {
               openMenuButtonColor="#fff"
               changeMenuColorOnOpen={true}
               colors={['#B19EEF', '#5227FF']}
+              
               logoUrl="./logo2.png"
               accentColor="#ff6b6b"
               onMenuOpen={() => console.log('Menu opened')}

@@ -9,6 +9,7 @@ import ClothDetails from './users/pages/ClothDetails'
 import Cloth from './users/pages/Cloth'
 import Seller from './users/pages/Seller'
 import Profile from './users/pages/Profile'
+import Auth from './pages/Auth'
 
 
 function App() {
@@ -47,6 +48,8 @@ function App() {
         <Route path='cloth' element={<Cloth/>} />
         <Route path='seller' element={<Seller/>} />
         <Route path='profile' element={<Profile/>} />
+        <Route path='login' element={<Auth/>} />
+        <Route path='register' element={<Auth insideRegister ={true} />} />
 
     </Routes>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import Footer from '@/component/Footer'
+import { IoHeartOutline } from "react-icons/io5";
 
 function Cloth() {
   return (
@@ -34,6 +35,10 @@ function Cloth() {
     {/* Card */}
    <div className="group">
       <div className="relative bg-[#f5f5f5]">
+        <button className="absolute top-4 right-4 z-20 cursor-pointer">
+      <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+    </button>
+        
        <Link to={'/clothdetails'}>
             <img
               src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
@@ -49,9 +54,13 @@ function Cloth() {
       </div>
     </div>
 
-    {/* Repeat Card */}
-    <div className="group">
+     {/* Card */}
+   <div className="group">
       <div className="relative bg-[#f5f5f5]">
+        <button className="absolute top-4 right-4 z-20 cursor-pointer">
+      <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+    </button>
+        
        <Link to={'/clothdetails'}>
             <img
               src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
@@ -67,9 +76,13 @@ function Cloth() {
       </div>
     </div>
 
-    {/* Card */}
-     <div className="group">
+     {/* Card */}
+   <div className="group">
       <div className="relative bg-[#f5f5f5]">
+        <button className="absolute top-4 right-4 z-20 cursor-pointer">
+      <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+    </button>
+        
        <Link to={'/clothdetails'}>
             <img
               src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
@@ -85,9 +98,13 @@ function Cloth() {
       </div>
     </div>
 
-    {/* Card */}
-     <div className="group">
+     {/* Card */}
+   <div className="group">
       <div className="relative bg-[#f5f5f5]">
+        <button className="absolute top-4 right-4 z-20 cursor-pointer">
+      <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+    </button>
+        
        <Link to={'/clothdetails'}>
             <img
               src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
