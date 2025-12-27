@@ -10,6 +10,8 @@ import Cloth from './users/pages/Cloth'
 import Seller from './users/pages/Seller'
 import Profile from './users/pages/Profile'
 import Auth from './pages/Auth'
+import Cart from './users/pages/Cart'
+import Wishlist from './users/pages/Wishlist'
 
 
 function App() {
@@ -50,6 +52,9 @@ function App() {
         <Route path='profile' element={<Profile/>} />
         <Route path='login' element={<Auth/>} />
         <Route path='register' element={<Auth insideRegister ={true} />} />
+        <Route path='cart' element={<Cart/>} />
+        <Route path='wishlist' element={<Wishlist/>} />
+
 
     </Routes>
   )

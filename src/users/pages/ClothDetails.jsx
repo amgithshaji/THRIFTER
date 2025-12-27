@@ -3,7 +3,6 @@ import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import Footer from '@/component/Footer'
 
-
 function ClothDetails() {
     return (
         <div>
@@ -21,8 +20,8 @@ function ClothDetails() {
                                 <p className='text-[10px] font-light mt-1 tracking-[1px] uppercase' >MRP INCL. ALL TAXES</p>
                                 <hr className='mt-10  border-black' />
                                 <p className='text-[11px] font-base mt-9 uppercase' >WHITE | 2000/100/100. </p>
-                                <button className="w-full border mt-8 border-black py-3 text-xs tracking-widest uppercase hover:text-gray-900 transition">
-                                    buy
+                                <button className="w-full border mt-8 border-black py-3 text-xs tracking-widest uppercase hover:text-gray-700 transition cursor-pointer">
+                                    ADD
                                 </button>
 
                                 <p className="mt-8 text-[13px] tracking-widest uppercase leading-relaxed">

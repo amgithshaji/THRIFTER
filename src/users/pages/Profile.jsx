@@ -4,6 +4,7 @@ import Footer from '@/component/Footer'
 import ShinyText from '@/components/ShinyText'
 
 
+
 function Profile() {
   return (
     <div>
@@ -26,7 +27,7 @@ function Profile() {
 
             </div>
     
-      {/* 🔥 Profile + Orders Cards Section */}
+      {/*  Profile + Orders Cards Section */}
       <div  style={{ fontFamily: 'Raleway, sans-serif' }}  className="w-full flex justify-center ">
         <div className="w-[93%] grid grid-cols-1 lg:grid-cols-2 gap-6">
 
@@ -38,6 +39,7 @@ function Profile() {
             <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white hover:opacity-80 transition">
               Edit My Profile
             </button>
+            {/* <ProfileEdit/> */}
           </div>
 
           {/* My store Card */}

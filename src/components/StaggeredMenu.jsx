@@ -5,6 +5,7 @@ import { IoIosSearch } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { BiShoppingBag } from "react-icons/bi";
 import { IoHeartOutline } from "react-icons/io5";
+import { Badge } from "@/components/ui/badge"
 
 
 export const StaggeredMenu = ({
@@ -372,62 +373,55 @@ export const StaggeredMenu = ({
       </div>
 
        {/* searching */}
-       <div className=" md:py-2 md:mt-12 mt-2 relative z-50 md:ms-270 pointer-events-auto">
 
 
+
+
+{/* --- Combined Navigation Actions Container --- */}
+<div className="absolute md:me-24 top-0 right-0 z-50 flex items-center gap-4 md:gap-6 px-4 py-1 md:mt-12 mt-2 pointer-events-auto">
   
+  {/* Search (Desktop) */}
+  <div className="hidden sm:flex flex-col items-end">
+<Link to={'/cloth'}>
       <input
-      type="text"
-      placeholder="SEARCH"
-      className="hidden sm:block  bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-6"
-    />
-  
-    <div className="hidden sm:block h-px w-45 bg-black"></div>
-  
-  
-      <Link
-        to="/cloth"
-        className="absolute  top-1  w-8 h-8 cursor-pointer"
-      >
-        <IoIosSearch className="block sm:hidden text-xl mt-10 md:ms-1 ms-65" />
-      </Link>
- 
+        type="text"
+        placeholder="SEARCH"
+        className="bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-2"
+      />
+</Link>
+    <div className="h-px w-32 bg-black"></div>
+  </div>
 
-  
+  {/* Search (Mobile Icon) */}
+  <Link to="/cloth" className="sm:hidden text-xl">
+    <IoIosSearch />
+  </Link>
 
+  {/* Login */}
+  <Link to="/login" className="text-xs uppercase hover:opacity-70">
+    Login
+  </Link>
 
-{/* login btn */}
+  {/* Wishlist */}
+  <Link to="/wishlist" className="relative flex items-center">
+    <IoHeartOutline className="text-[18px]" />
+    <Badge variant="outline" className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
+      1
+    </Badge>
+  </Link>
 
-       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-53 pointer-events-auto">
-  <Link
-    to="/login"
-    className="absolute  top-1  w-8 h-8 cursor-pointer"
-  >
-    <p className="text-xs mt-2 md:ms-1 ms-65 uppercase" >
-      login</p> 
+  {/* Shopping Bag */}
+  <Link to="/cart" className="relative flex items-center">
+    <BiShoppingBag className="text-[18px]" />
+    <Badge variant="outline" className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
+      0
+    </Badge>
   </Link>
 </div>
-{/* wishlist */}
-       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-50 pointer-events-auto">
-  <Link
-    to="/login"
-    className="absolute  top-1  w-8 h-8 cursor-pointer"
-  >
-    <p className="text-[18px] mt-1 md:ms-20 ms-86 uppercase" >
-      <IoHeartOutline /></p> 
-  </Link>
-</div>
-{/* shoppingbag*/}
-       <div className=" md:py-2 md:mt-1 mt-3  z-50 md:ms-60 pointer-events-auto">
-  <Link
-    to="/login"
-    className="absolute  top-1  w-8 h-8 cursor-pointer"
-  >
-    <p className="text-[18px] mt-1 md:ms-20 ms-78 uppercase" >
-      <BiShoppingBag /></p> 
-  </Link>
-</div>
-</div>
+{/* --- End of Navigation Actions --- */}
+
+
+
 
 
 
