@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import Footer from '@/component/Footer'
 
+
 function ClothDetails() {
+
+      const [token,setToken] = useState("")
+    
+      useEffect(()=>{
+      if (sessionStorage.getItem("token")){
+        const usertoken = sessionStorage.getItem("token")
+        setToken(usertoken)
+      }
+    
+    },[])
     return (
         <div>
             <Header />
-            <div style={{ fontFamily: 'Raleway, sans-serif' }}>
+        {
+            token?
+                <div style={{ fontFamily: 'Raleway, sans-serif' }}>
                 <div className='grid md:grid-cols-2 grid-cols-1 h-screen md:ms-55 ms-4 gap-30' >
                     <div>
                         <img className=' me-30 md:mt-1 mt-25  md:h-210 h-130 md:w-143 w-89 object-cover object-top relative ' src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg?ts=1765983610422&w=1024" alt="no img" />
@@ -85,6 +98,13 @@ function ClothDetails() {
                 </div>
 
             </div>
+            :
+                  <div className='w-full h-screen flex justify-center items-center flex-col'>
+                    {/* not login  book page */}
+               <img className='w-100' src="https://cdn.pixabay.com/animation/2023/06/13/15/12/15-12-30-710_512.gif" alt="lock screen" />
+               <p className='text x-l font-bold my-15' >Please <Link to={'/login'} className='underline text-blue-500' >Login </Link>to explore more </p>
+                </div>
+        }
             <Footer/>
         </div>
     )

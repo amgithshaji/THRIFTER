@@ -1,11 +1,13 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 // import './StaggeredMenu.css';
 import { IoIosSearch } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiShoppingBag } from "react-icons/bi";
 import { IoHeartOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge"
+import { ToastContainer, toast,Slide  } from 'react-toastify';
+
 
 
 export const StaggeredMenu = ({
@@ -47,6 +49,57 @@ export const StaggeredMenu = ({
   const toggleBtnRef = useRef(null);
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef(null);
+
+  const[name,setName] = useState("")
+  const[token,setToken] = useState("")
+  const[searchKey,setSearchkey] = useState("")
+// console.log(searchKey);
+const navigate = useNavigate()
+  
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+  const userToken = sessionStorage.getItem("token")
+  setToken(userToken)
+  const user = JSON.parse(sessionStorage.getItem("user"))
+  setName(user.username)
+    }
+  },[token])
+
+const handleSearch = ()=>{
+  if (!searchKey) {
+    toast.warning("Type something, thrift legend")
+    
+  }else if (!sessionStorage.getItem("token")) {
+        toast.warning("Login to start thrifting like a pro")
+   setTimeout(()=>{
+    navigate('/login')
+   },4000);
+    
+  }else if(sessionStorage.getItem("token")&& searchKey){
+    navigate('/cloth')
+  }else{
+    toast.error("Yikes! That wasn’t supposed to happen")
+  }
+  
+}
+
+// search on mobile
+
+
+
+const handleSearchMobile = ()=>{
+  if (!sessionStorage.getItem("token")) {
+        toast.warning("Login to start thrifting like a pro")
+   setTimeout(()=>{
+    navigate('/login')
+   },4000);
+ 
+  }else if(sessionStorage.getItem("token")) {
+    navigate('/cloth')
+  
+  }
+
+}
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -382,25 +435,29 @@ export const StaggeredMenu = ({
   
   {/* Search (Desktop) */}
   <div className="hidden sm:flex flex-col items-end">
-<Link to={'/cloth'}>
-      <input
-        type="text"
-        placeholder="SEARCH"
-        className="bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-2"
-      />
+<Link  >
+      <input onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="SEARCH" className="bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-2"/>
 </Link>
-    <div className="h-px w-32 bg-black"></div>
+    <div className="h-px w-32 bg-black">    <IoIosSearch onClick={handleSearch} className='ms-27' style={{"marginTop":"-19px"}} />
+</div>
   </div>
 
   {/* Search (Mobile Icon) */}
-  <Link to="/cloth" className="sm:hidden text-xl">
+  <button onClick={handleSearchMobile}  className="sm:hidden text-xl">
     <IoIosSearch />
-  </Link>
+  </button>
 
   {/* Login */}
-  <Link to="/login" className="text-xs uppercase hover:opacity-70">
+  {
+    !token?
+    <Link to="/login" className="text-xs uppercase hover:opacity-70">
     Login
   </Link>
+  :
+  <Link to="/login" className="text-xs uppercase hover:opacity-70 ">
+    {name}
+  </Link>
+  }
 
   {/* Wishlist */}
   <Link to="/wishlist" className="relative flex items-center">
@@ -512,6 +569,13 @@ export const StaggeredMenu = ({
           )}
         </div>
       </aside>
+           {/* toast container */}
+            <ToastContainer
+              position="bottom-left"
+              autoClose={3000}
+              transition={Slide}
+              theme="dark"
+            />
     </div>
   );
 };

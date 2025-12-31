@@ -12,6 +12,7 @@ import Profile from './users/pages/Profile'
 import Auth from './pages/Auth'
 import Cart from './users/pages/Cart'
 import Wishlist from './users/pages/Wishlist'
+import AdminHome from './admin/pages/AdminHome'
 
 
 function App() {
@@ -46,14 +47,16 @@ function App() {
             }
           </div>
         } />
-        <Route path='clothdetails' element={<ClothDetails/>} />
-        <Route path='cloth' element={<Cloth/>} />
-        <Route path='seller' element={<Seller/>} />
-        <Route path='profile' element={<Profile/>} />
-        <Route path='login' element={<Auth/>} />
-        <Route path='register' element={<Auth insideRegister ={true} />} />
-        <Route path='cart' element={<Cart/>} />
-        <Route path='wishlist' element={<Wishlist/>} />
+        <Route path='/clothdetails' element={<ClothDetails/>} />
+        <Route path='/cloth' element={<Cloth/>} />
+        <Route path='/seller' element={<Seller/>} />
+        <Route path='/profile' element={<Profile/>} />
+        <Route path='/login' element={<Auth/>} />
+        <Route path='/register' element={<Auth insideRegister ={true} />} />
+        <Route path='/cart' element={<Cart/>} />
+        <Route path='/wishlist' element={<Wishlist/>} />
+         <Route path='/admin/home' element={<AdminHome/>} />
+
 
 
     </Routes>
