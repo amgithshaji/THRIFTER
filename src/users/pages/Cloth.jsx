@@ -164,12 +164,13 @@ function Cloth() {
         </p>
 
         {/* Login CTA */}
-        <button
-          onClick={() => navigate("/login")}
-          className="w-full border border-black py-2 text-sm tracking-widest hover:bg-black hover:text-white transition mb-3"
-        >
-          LOGIN TO CONTINUE
-        </button>
+      <Link to={'/login'}>
+          <button
+            className="w-full border border-black py-2 text-sm tracking-widest hover:bg-black hover:text-white transition mb-3"
+          >
+            LOGIN TO CONTINUE
+          </button>
+      </Link>
 
         {/* Home CTA */}
         <Link to="/">

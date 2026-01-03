@@ -6,9 +6,9 @@ import Footer from '@/component/Footer';
 
 function Cart() {
   return (
-    <div style={{ fontFamily: 'Raleway, sans-serif' }}>
+    <div  style={{ fontFamily: 'Raleway, sans-serif' }} className='md:h-470 h-670' >
                 <Header/>
-<div className="w-full bg-white">
+<div className="w-full bg-white ">
   {/* Category buttons */}
   <div className="flex gap-4 px-10 pt-9 md:ms-20 md:text-[12px] text-[10px] text-bold tracking-[0.09em] uppercase md:mt-40 mt-25 ">
     <button className="hover:font-semibold transition cursor-pointer ">

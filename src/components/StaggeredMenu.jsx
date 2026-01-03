@@ -454,7 +454,7 @@ const handleSearchMobile = ()=>{
     Login
   </Link>
   :
-  <Link to="/login" className="text-xs uppercase hover:opacity-70 ">
+  <Link to="/profile" className="text-xs uppercase hover:opacity-70 ">
     {name}
   </Link>
   }

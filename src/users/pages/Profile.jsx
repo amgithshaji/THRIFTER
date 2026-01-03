@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '@/component/Footer'
 import ShinyText from '@/components/ShinyText'
@@ -19,6 +19,55 @@ import { Upload } from "lucide-react"
 
 
 function Profile() {
+
+  const [userName,setUserName] = useState("")
+  // console.log(userName);
+
+  const [userEmail,setUserEmail] = useState("")
+  // console.log(userEmail);
+
+const[preview,setPreview] = useState("")
+console.log(preview);
+const [previewList,setPreviewList] = useState([])
+
+
+  const[clothDetails,setClothDetails] = useState({
+    clothname:"",price:"",clothcolor:"",productid:"",clothdetails:"",clothdescription:"",size:"",mainfabric:"",secondaryfabric:"",gender:"",category:"",uploadimages:[]
+  })
+  console.log(clothDetails);
+  
+  
+  
+
+useEffect(()=>{
+  if(sessionStorage.getItem("token") && sessionStorage.getItem("user")){
+    const user = JSON.parse(sessionStorage.getItem("user"))
+    setUserName(user?.username)
+    setUserEmail(user?.email)
+  }
+
+},[])
+
+
+const handleUploadBookImage = (e)=>{
+  // get uploaded file
+console.log(e.target.files[0]);
+// add file to state
+const imgFileArray = clothDetails.uploadimages
+imgFileArray.push(e.target.files[0]) 
+setClothDetails({...clothDetails,uploadimages:imgFileArray})
+// convert file to URL
+const url = URL.createObjectURL(e.target.files[0])
+console.log(url);
+setPreview(url)
+
+const clothImages = previewList
+clothImages.push(url)
+setPreviewList(clothImages)
+
+
+}
+
   return (
     <div>
         <Header/>
@@ -29,12 +78,12 @@ function Profile() {
                     src="https://i.pinimg.com/736x/fc/b8/f7/fcb8f7c246d81ad733ecb907dd52a344.jpg" alt="img" className="w-[93%] h-100 object-cover object-top" />
 
             </div>
-                 <div style={{ fontFamily: "Playfair Display, serif" }} className='text-center mt-1 mb-8  text-5xl font-semibold ' >
+                 <div style={{ fontFamily: "Playfair Display, serif" }} className='text-center mt-1 mb-8  text-[45px] font-semibold ' >
                 <div>
                     <ShinyText
-                        text="MIRO"
+                        text={userName}
                         speed={3}
-                        className='custom-class'
+                        className='custom-class uppercase'
                     />
                 </div>
 
@@ -47,7 +96,7 @@ function Profile() {
           {/* My Profile Card */}
           <div className="bg-white border  p-8  transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ">
             <h2 className="text-1xl font-semibold  mb-6 uppercase">My Profile</h2>
-            <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p>
+            <p className="mb-9 text-[13px] font-medium">Login: {userEmail}</p>
 {/* 
             <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white hover:opacity-80 transition">
               Edit My Profile
@@ -56,8 +105,8 @@ function Profile() {
 
 
 
-  <Sheet    >
-      <SheetTrigger  className="w-full py-2 text-sm border border-black bg-white text-black hover:bg-black hover:text-white hover:opacity-80 transition">
+  <Sheet>
+      <SheetTrigger  className="w-full py-2 text-sm border border-black bg-white text-black hover:bg-black hover:text-white  transition">
         Edit My Profile
       </SheetTrigger>
 
@@ -223,103 +272,109 @@ function Profile() {
         </SheetHeader>
 
         {/* form content */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 px-2 md:px-4 pb-6">
+         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 px-2 md:px-4 pb-6">
 
           {/* Cloth Name */}
           <div className="space-y-1">
             <Label>Cloth Name</Label>
-            <Input placeholder="Ex: Oversized T-Shirt" />
+            <Input value={clothDetails.clothname} onChange={e => setClothDetails({...clothDetails, clothname: e.target.value })}  placeholder="Ex: Oversized T-Shirt" />
           </div>
 
           {/* Price */}
           <div className="space-y-1">
             <Label>Price</Label>
-            <Input type="number" placeholder="Ex: 1299" />
+            <Input value={clothDetails.price} onChange={e => setClothDetails({...clothDetails, price: e.target.value })}  type="number" placeholder="Ex: 1299" />
           </div>
 
           {/* Cloth Color */}
           <div className="space-y-1">
             <Label>Cloth Color</Label>
-            <Input placeholder="Ex: Beige" />
+            <Input value={clothDetails.clothcolor} onChange={e => setClothDetails({...clothDetails, clothcolor: e.target.value })}  placeholder="Ex: Beige" />
           </div>
 
           {/* Product ID */}
           <div className="space-y-1">
             <Label>Product ID</Label>
-            <Input placeholder="Auto / Manual Id" />
+            <Input value={clothDetails.productid} onChange={e => setClothDetails({...clothDetails, productid: e.target.value })}  placeholder="Auto / Manual Id" />
           </div>
 
           {/* Cloth Details */}
           <div className="space-y-1 md:col-span-2">
             <Label>Cloth Details</Label>
-            <Input placeholder="Slim fit, round neck, regular length" />
+            <Input value={clothDetails.clothdetails} onChange={e => setClothDetails({...clothDetails, clothdetails: e.target.value })}  placeholder="Slim fit, round neck, regular length" />
           </div>
 
           {/* Cloth Description */}
           <div className="space-y-1 md:col-span-2">
             <Label>Cloth Description</Label>
-            <textarea
-              className="w-full border rounded-md px-3 py-2 min-h-90px outline-none"
-              placeholder="100% cotton, soft touch fabric…"
-            />
+            <textarea value={clothDetails.clothdescription} onChange={e => setClothDetails({...clothDetails, clothdescription: e.target.value })}  className="w-full border rounded-md px-3 py-2 min-h-90px outline-none" placeholder="100% cotton, soft touch fabric…"/>
           </div>
 
           {/* Size */}
           <div className="space-y-1">
             <Label>Size</Label>
-            <Input placeholder="S / M / L / XL" />
+            <Input value={clothDetails.size} onChange={e => setClothDetails({...clothDetails, size: e.target.value })}  placeholder="S / M / L / XL" />
           </div>
 
           {/* Main Fabric */}
           <div className="space-y-1">
             <Label>Main Fabric</Label>
-            <Input placeholder="Cotton / Denim / Polyester" />
+            <Input value={clothDetails.mainfabric} onChange={e => setClothDetails({...clothDetails, mainfabric: e.target.value })}  placeholder="Cotton / Denim / Polyester" />
           </div>
 
           {/* Secondary Fabric */}
           <div className="space-y-1">
             <Label>Secondary Fabric</Label>
-            <Input placeholder="Optional" />
+            <Input value={clothDetails.secondaryfabric} onChange={e => setClothDetails({...clothDetails, secondaryfabric: e.target.value })}  placeholder="Optional" />
           </div>
 
           {/* Category */}
           <div className="space-y-1">
             <Label>Gender</Label>
-            <Input placeholder="Men / Women" />
+            <Input value={clothDetails.gender} onChange={e => setClothDetails({...clothDetails, gender: e.target.value })}  placeholder="Men / Women" />
           </div>
 
               {/* Category */}
           <div className="space-y-1">
             <Label>Category</Label>
-            <Input placeholder="Tops / Jeans / Jackets / Dresses" />
+            <Input value={clothDetails.category} onChange={e => setClothDetails({...clothDetails, category: e.target.value })}  placeholder="Tops / Jeans / Jackets / Dresses" />
           </div>
 
-          {/* Seller Mail */}
-          <div className="space-y-1">
-            <Label>Seller Email</Label>
-            <Input type="email" placeholder="seller@email.com" />
-          </div>
-
-          {/* Status */}
-          <div className="space-y-1">
-            <Label>Status</Label>
-            <Input placeholder="Available / Sold" />
-          </div>
-
-          {/* Buyer Mail */}
-          <div className="space-y-1">
-            <Label>Buyer Email</Label>
-            <Input type="email" placeholder="Optional until sold" />
-          </div>
+        
 
           {/* Upload Images */}
           <div className="space-y-1 md:col-span-2">
-            <Label>Upload Images</Label>
+            <Label>Upload Images (Max 7)</Label>
 
             <label className="border-dashed border-2 border-gray-400 rounded-2xl h-40 flex flex-col items-center justify-center cursor-pointer hover:opacity-80 transition">
-              <Upload className="mb-2" />
-              <span className="text-sm">Click to upload images</span>
-              <input type="file" className="hidden" multiple />
+
+       {
+  preview ? 
+   <div className='flex'>
+      {/* <img width={'100px'} height={'100px'} src={preview} className="mx-2 h-full object-fill" alt="upload" /> */}
+{
+  previewList?.map((clothimgURL,index)=>(
+       <img key={index}  height={'100px'} src={clothimgURL} className="mx-1 md:w-25 w-10 md:h-35 h-19" alt="upload" />
+
+  ))
+}         
+{ previewList.length<7 &&
+      <Upload className="mt-15 mx-2" />
+
+}
+   </div>
+
+   : 
+    <>
+      <Upload className="mb-2" />
+      <span className="text-sm">Click to upload images</span>
+    </>
+  
+}
+
+
+
+              <input onChange={e=>handleUploadBookImage(e)} type="file" className="hidden" multiple />
             </label>
           </div>
         </div>
@@ -344,16 +399,16 @@ function Profile() {
             <h2 className="text-1xl font-semibold  mb-6 uppercase">cloth status</h2>
             {/* <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p> */}
 
-            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white hover:opacity-80 transition">
+            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
               Check Status
             </button>
           </div>
              {/* my order */}
            <div className="bg-white border  p-8  transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ">
             <h2 className="text-1xl font-semibold  mb-6 uppercase">My order</h2>
-            <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p>
+            <p className="mb-9 text-[13px]">Login: <span className='font-medium' >{userEmail}</span></p>
 
-            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white hover:opacity-80 transition">
+            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
               Start Shopping
             </button>
           </div>

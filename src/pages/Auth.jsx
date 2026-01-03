@@ -2,8 +2,8 @@ import Chroma from '@/component/Chroma'
 import Header from '@/users/components/Header'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast,Slide  } from 'react-toastify';
-import {  loginAPI, registerAPI } from '@/services/allAPI';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import { googleLoginAPI, loginAPI, registerAPI } from '@/services/allAPI';
 import { FaEyeSlash } from 'react-icons/fa'
 import { FaEye } from 'react-icons/fa6'
 import { GoogleLogin } from '@react-oauth/google';
@@ -18,15 +18,15 @@ import { jwtDecode } from 'jwt-decode';
 
 function Auth({ insideRegister }) {
 
-    const [viewPassword, setViewPassword] = useState(false)
+  const [viewPassword, setViewPassword] = useState(false)
   const navigate = useNavigate()
-  const [userDetails,setUserDetails] = useState({
-        username: "",
-        email: "",
-       password: ""
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    email: "",
+    password: ""
   })
   // console.log(userDetails);
-   const handleRegister = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault()
     const { username, email, password } = userDetails
     if (email && password && username) {
@@ -58,54 +58,126 @@ function Auth({ insideRegister }) {
       toast.info("please fill the form completely")
     }
   }
-// login
+  // login
 
-const handleLogin = async (e)=>{
-e.preventDefault()
-const {email,password} = userDetails
-if (email && password) {
-  try{
-// api call
-const result = await loginAPI(userDetails)
-console.log(result);
-if (result.status==200) {
-  toast.success("login successfull")
-  sessionStorage.setItem("token",result.data.token)
-  sessionStorage.setItem("user",JSON.stringify(result.data.user))
-    setTimeout(()=>{
-if (result.data.user.role=="admin") {
-  navigate('/admin/home')
-}else{
-  navigate('/')
-}
-  },2500)
-  
-}else if(result.status==401 || result.status==404){
-  toast.warning(result.response.data)
-  setUserDetails({username:"",email:"",password:""})
-}else{
-  toast.error("something went wrong")
-    setUserDetails({username:"",email:"",password:""})
-  
-}
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const { email, password } = userDetails
+    if (email && password) {
+      try {
+        // api call
+        const result = await loginAPI(userDetails)
+        console.log(result);
+        if (result.status == 200) {
+          toast.success("login successfull")
+          sessionStorage.setItem("token", result.data.token)
+          sessionStorage.setItem("user", JSON.stringify(result.data.user))
+          setTimeout(() => {
+            if (result.data.user.role == "admin") {
+              navigate('/admin/home')
+            } else {
+              navigate('/')
+            }
+          }, 2500)
+
+        } else if (result.status == 401 || result.status == 404) {
+          toast.warning(result.response.data)
+          setUserDetails({ username: "", email: "", password: "" })
+        } else {
+          toast.error("something went wrong")
+          setUserDetails({ username: "", email: "", password: "" })
+
+        }
 
 
-  }catch(err){
-    console.log(err);
-    
+      } catch (err) {
+        console.log(err);
+
+      }
+    } else {
+      toast.info("please fill the form completely!!!")
+    }
   }
-}else{
-  toast.info("please fill the form completely!!!")
-}
-}
-// google login
-  // const login = useGoogleLogin({
-  //   onSuccess: (tokenResponse) => console.log(tokenResponse),
-  //   onError: () => console.log("Google login failed"),
-  // });
 
 
 
+
+
+// google login function for normal design google button
+
+  //   const handleGoogleLogin = async (credentialResponse) => {
+  //     console.log("inside handleGoogleLogin");
+  //     console.log(credentialResponse);
+  // const decode = jwtDecode(credentialResponse.credential)
+  // console.log(decode);
+  // const result = await googleLoginAPI({username:decode.name,email:decode.email,password:'googlePassword'})
+  //    if (result.status == 200) {
+  //           toast.success("login successfull")
+  //           sessionStorage.setItem("token", result.data.token)
+  //           sessionStorage.setItem("user", JSON.stringify(result.data.user))
+  //           setTimeout(() => {
+  //             if (result.data.user.role == "admin") {
+  //               navigate('/admin/home')
+  //             } else {
+  //               navigate('/')
+  //             }
+  //           }, 2500)
+
+  //         }else{
+  //           console.log(result);
+
+  //               toast.error("something went wrong")
+  //         }
+
+  //   }
+
+
+  // google login function for custom design google button
+
+
+  const handleGoogleLogin = async (tokenResponse) => {
+    console.log("inside handleGoogleLogin");
+    console.log(tokenResponse);
+
+    const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: {
+        Authorization: `Bearer ${tokenResponse.access_token}`,
+      },
+    });
+
+    const decode = await res.json(); // same content as decoded JWT
+    console.log(decode);
+
+    const result = await googleLoginAPI({
+      username: decode.name,
+      email: decode.email,
+      password: "googlePassword",
+    });
+
+    if (result.status === 200) {
+      toast.success("login successfull");
+      sessionStorage.setItem("token", result.data.token);
+      sessionStorage.setItem("user", JSON.stringify(result.data.user));
+
+      setTimeout(() => {
+        if (result.data.user.role === "admin") {
+          navigate("/admin/home");
+        } else {
+          navigate("/");
+        }
+      }, 2500);
+    } else {
+      console.log(result);
+      toast.error("something went wrong");
+    }
+  };
+
+
+  // google login
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => handleGoogleLogin(tokenResponse),
+    onError: () => console.log("Google login failed"),
+  });
 
   return (
     <div>
@@ -125,23 +197,23 @@ if (result.data.user.role=="admin") {
             {
               insideRegister &&
               <div className="relative">
-                <input value={userDetails.username} onChange={(e)=>setUserDetails({...userDetails,username:e.target.value})} type="text" id="username" className="peer w-full border-b  border-black py-2 outline-none placeholder-transparent" placeholder="Name" />
+                <input value={userDetails.username} onChange={(e) => setUserDetails({ ...userDetails, username: e.target.value })} type="text" id="username" className="peer w-full border-b  border-black py-2 outline-none placeholder-transparent" placeholder="Name" />
                 <label htmlFor="username" className="absolute left-0  text-xs tracking-widest text-gray-500 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[10px] peer-focus:-top-1 peer-focus:text-[10px] ">NAME</label>
               </div>
             }
             <div className="relative">
-              <input value={userDetails.email} onChange={(e)=>setUserDetails({...userDetails,email:e.target.value})} type="email" id="email" className="peer w-full border-b border-black py-2 outline-none placeholder-transparent " placeholder="Email" />
+              <input value={userDetails.email} onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} type="email" id="email" className="peer w-full border-b border-black py-2 outline-none placeholder-transparent " placeholder="Email" />
               <label htmlFor="email" className="absolute left-0  text-xs tracking-widest text-gray-500 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[10px] peer-focus:-top-1 peer-focus:text-[10px]">EMAIL</label>
             </div>
 
             <div className="relative">
-              <input value={userDetails.password} onChange={(e)=>setUserDetails({...userDetails,password:e.target.value})}  type={viewPassword ? "text" : "password"} id="password" className="peer w-full border-b border-black py-3 outline-none placeholder-transparent " placeholder="Password" />
-               {
-                  viewPassword ?
-                          <FaEyeSlash onClick={() => setViewPassword(!viewPassword)} color='black' className='text-gray-400  cursor-pointer md:ms-90 ms-70 "' style={{ marginTop: "-30px" }} />
+              <input value={userDetails.password} onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })} type={viewPassword ? "text" : "password"} id="password" className="peer w-full border-b border-black py-3 outline-none placeholder-transparent " placeholder="Password" />
+              {
+                viewPassword ?
+                  <FaEyeSlash onClick={() => setViewPassword(!viewPassword)} color='black' className='text-gray-400  cursor-pointer md:ms-90 ms-70 "' style={{ marginTop: "-30px" }} />
                   :
                   <FaEye onClick={() => setViewPassword(!viewPassword)} color='black' className='text-gray-400  cursor-pointer md:ms-90 ms-70 ' style={{ marginTop: "-30px" }} />
-               }
+              }
 
               <label htmlFor="password" className="absolute left-0 top-1 text-xs tracking-widest text-gray-500 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-[10px] peer-focus:-top-1 peer-focus:text-[10px]">PASSWORD</label>
 
@@ -156,18 +228,18 @@ if (result.data.user.role=="admin") {
               <>
                 <Link to={'/register'}>
 
-                  <button onClick={handleRegister}  className="w-full bg-black mt-9 text-white py-2 text-xs tracking-widest font-light hover:bg-gray-900">Register</button>
+                  <button onClick={handleRegister} className="w-full bg-black mt-9 text-white py-2 text-xs tracking-widest font-light hover:bg-gray-900">Register</button>
                 </Link>
 
                 <Link to={'/login'}>
-                  <button  className="w-full border border-black py-2 text-xs font-light tracking-widest hover:text-gray-500">Login
+                  <button className="w-full border border-black py-2 text-xs font-light tracking-widest hover:text-gray-500">Login
                   </button>
                 </Link>
               </>
               :
               <>
                 <Link to={'/login'}>
-                  <button onClick={handleLogin}  className="w-full border border-black py-2 text-xs font-light tracking-widest hover:text-gray-500">Login
+                  <button onClick={handleLogin} className="w-full border border-black py-2 text-xs font-light tracking-widest hover:text-gray-500">Login
                   </button>
                 </Link>
 
@@ -186,36 +258,40 @@ if (result.data.user.role=="admin") {
                 <p className="text-[11px] font-light mb-6">By logging in with my social login, I agree to link my account in accordance with the Privacy Policy.</p>
 
                 <div className="flex flex-col gap-3">
-                  
-    <div className="w-full flex justify-center">
-  <div className="w-full  flex justify-center">
-<GoogleLogin
-  onSuccess={credentialResponse => {
-    console.log(credentialResponse);
-  }}
-  onError={() => {
-    console.log('Login Failed');
-  }}
-/>;
 
-    
-    {/* google login */}
-    {/* <button
-      onClick={() => login()}
-      
-      className="w-full py-2 border border-black text-xs tracking-widest font-light flex items-center justify-center gap-3 hover:bg-black hover:text-white transition"
-    >
-      <img
-        src="https://www.svgrepo.com/show/475656/google-color.svg"
-        className="w-5 h-5"
-        alt="google"
-      />
-      CONTINUE WITH GOOGLE
-    </button> */}
+                  <div className="w-full flex justify-center">
+                    <div className="w-full  flex justify-center">
+
+                      {/* normal design */}
+                      {/* <GoogleLogin
+                        onSuccess={credentialResponse => {
+                          handleGoogleLogin(credentialResponse)
+                        }}
+                        onError={() => {
+                          console.log('Login Failed');
+                        }}
+                      />; */}
+
+                      {/* custom design button */}
+                      <button
+                        type='button'
+                        onClick={() => login()}
+                        className="w-full border border-black py-2 mt-3 text-sm tracking-wide
+             hover:bg-black hover:text-white transition flex items-center justify-center gap-2"
+                      >
+                        <img
+                          src="/google logo.webp"
+                          alt="google"
+                          className="w-4 h-4"
+                        />
+                        Continue with Google
+                      </button>
 
 
-  </div>
-</div>
+
+
+                    </div>
+                  </div>
 
 
 
@@ -254,7 +330,7 @@ if (result.data.user.role=="admin") {
                     </svg>
                   </div>
                   <span className="text-[11px] font-light tracking-wide ">
-                     Keep me notified about new collections and price drops   
+                    Keep me notified about new collections and price drops
                   </span>
                 </label>
               </div>
@@ -266,7 +342,7 @@ if (result.data.user.role=="admin") {
           < Chroma />
         </div>
       </div>
-         {/* toast container */}
+      {/* toast container */}
       <ToastContainer
         position="bottom-left"
         autoClose={2000}

@@ -191,7 +191,7 @@ function Home() {
             <h1 style={{ fontFamily: "Playfair Display, serif" }}  >
           <SplitText
                 text="New Drop"
-                className="md:text-6xl text-3xl"
+                className="md:text-[60px] text-[30px]"
                 delay={100}
                 duration={0.9}
                 ease="power3.out"

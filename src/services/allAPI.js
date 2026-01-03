@@ -13,3 +13,8 @@ return await commonAPI("POST",`${serverURL}/login`,userDetails)
 
 }
 
+// google/sign-in : 
+export const googleLoginAPI = async(userDetails)=>{
+return await commonAPI("POST",`${serverURL}/google/sign-in`,userDetails)
+
+}
