@@ -18,3 +18,22 @@ export const googleLoginAPI = async(userDetails)=>{
 return await commonAPI("POST",`${serverURL}/google/sign-in`,userDetails)
 
 }
+
+// add cloth: user add cloth
+export const addClothAPI = async(reqBody,reqHeader)=>{
+return await commonAPI("POST",`${serverURL}/user/clothes/add`,reqBody,reqHeader)
+
+}
+
+// add cloth: user add cloth
+export const getClothAPI = async(reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/clothes/all`,{},reqHeader)
+
+}
+
+// view cloth: user add cloth
+export const viewClothAPI = async(reqHeader,id)=>{
+return await commonAPI("GET",`${serverURL}/cloth/${id}/view`,{},reqHeader)
+
+}
+

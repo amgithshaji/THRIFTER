@@ -32,7 +32,7 @@ function Header() {
               changeMenuColorOnOpen={true}
               colors={['#B19EEF', '#5227FF']}
               
-              logoUrl="./logo2.png"
+              logoUrl="/logo2.png"
               accentColor="#ff6b6b"
               onMenuOpen={() => console.log('Menu opened')}
               onMenuClose={() => console.log('Menu closed')}

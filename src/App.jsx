@@ -47,7 +47,7 @@ function App() {
             }
           </div>
         } />
-        <Route path='/clothdetails' element={<ClothDetails/>} />
+        <Route path='/cloth/:id/details' element={<ClothDetails/>} />
         <Route path='/cloth' element={<Cloth/>} />
         <Route path='/seller' element={<Seller/>} />
         <Route path='/profile' element={<Profile/>} />

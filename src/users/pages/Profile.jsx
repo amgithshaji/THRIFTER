@@ -15,6 +15,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
+import { addClothAPI } from '@/services/allAPI'
+// import { toast } from 'react-toastify'
+import { ToastContainer, toast, Slide } from 'react-toastify';
+
 
 
 
@@ -49,7 +53,7 @@ useEffect(()=>{
 },[])
 
 
-const handleUploadBookImage = (e)=>{
+const handleUploadClothImage = (e)=>{
   // get uploaded file
 console.log(e.target.files[0]);
 // add file to state
@@ -66,6 +70,54 @@ clothImages.push(url)
 setPreviewList(clothImages)
 
 
+}
+
+const cancelUploadCloth = ()=>{
+  setClothDetails({ clothname:"",price:"",clothcolor:"",productid:"",clothdetails:"",clothdescription:"",size:"",mainfabric:"",secondaryfabric:"",gender:"",category:"",uploadimages:[]})
+  setPreview("")
+  setPreviewList([])
+}
+
+const handleUploadCloth = async ()=>{
+  
+  const {clothname, price, clothcolor, productid, clothdetails, clothdescription, size, mainfabric, secondaryfabric, gender, category,uploadimages} = clothDetails
+  if (!clothname || !price || !clothcolor || !productid || !clothdetails || !clothdescription || !size || !mainfabric || !secondaryfabric || !gender || !category || uploadimages.length==0){
+   toast.info("please fill the form completly") 
+  //  alert("please fill the form completl")
+  }else{
+    // api call
+    const token = sessionStorage.getItem("token")
+    if(token){
+        const reqHeader = {
+            "Authorization" : `Bearer ${token}`
+         }
+         const reqBody = new FormData()
+         for(let key in clothDetails){
+          if (key != "uploadimages") {
+            reqBody.append(key,clothDetails[key])
+            
+          }else{
+            clothDetails.uploadimages.forEach(imgFile=>{
+              reqBody.append("uploadimages",imgFile)
+            })
+          }
+         }
+         const result = await addClothAPI(reqBody,reqHeader)
+         console.log(result);
+         if (result.status==200) {
+          toast.success("cloth added successfully")
+         }else if(result.status==401) {
+          toast.warning(result.response.data) 
+         }else{
+         toast.error("something went wrong")
+
+         }
+         cancelUploadCloth()
+         
+      
+    }
+    
+  }
 }
 
   return (
@@ -374,19 +426,21 @@ setPreviewList(clothImages)
 
 
 
-              <input onChange={e=>handleUploadBookImage(e)} type="file" className="hidden" multiple />
+              <input onChange={e=>handleUploadClothImage(e)} type="file" className="hidden" multiple />
             </label>
+                    <p className="text-xs text-gray-500 mt-1">Tip: Your first photo is the one shoppers see first!</p>
+
           </div>
         </div>
 
         {/* buttons */}
         <div className="px-2 md:px-4 pb-8 space-y-3">
-          <Button className="w-full bg-black text-white hover:opacity-80">
+          <Button onClick={handleUploadCloth} className="w-full bg-black text-white hover:opacity-80">
             Add Product
           </Button>
 
           <SheetClose asChild>
-            <Button variant="outline" className="w-full border-black">
+            <Button onClick={cancelUploadCloth}  variant="outline" className="w-full border-black">
               Cancel
             </Button>
           </SheetClose>
@@ -426,6 +480,14 @@ setPreviewList(clothImages)
                 </div>
 
         <Footer/>
+          {/* toast container */}
+      <ToastContainer
+      style={{ zIndex: 9999999 }} 
+        position="bottom-right"
+        autoClose={2000}
+        transition={Slide}
+        theme="dark"
+      />
     </div>
   )
 }
