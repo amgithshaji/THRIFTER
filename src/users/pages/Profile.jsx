@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
-import { addClothAPI } from '@/services/allAPI'
+import { addClothAPI, addStoreAPI } from '@/services/allAPI'
 // import { toast } from 'react-toastify'
 import { ToastContainer, toast, Slide } from 'react-toastify';
 
@@ -38,7 +38,7 @@ const [previewList,setPreviewList] = useState([])
   const[clothDetails,setClothDetails] = useState({
     clothname:"",price:"",clothcolor:"",productid:"",clothdetails:"",clothdescription:"",size:"",mainfabric:"",secondaryfabric:"",gender:"",category:"",uploadimages:[]
   })
-  console.log(clothDetails);
+  // console.log(clothDetails);
   
   
   
@@ -118,6 +118,81 @@ const handleUploadCloth = async ()=>{
     }
     
   }
+}
+
+// add store
+const [addStore,SetAddStore] = useState({
+  storename:"",storetagline:"",storedetails:"",storedescription:"",uploadimages:[]
+})
+console.log(addStore);
+
+const [storePreview,setStorePreview] = useState("")
+   const [storePreviewList,setStorePreviewList] = useState([])
+
+   const handleUploadStoreImage =(e)=>{
+        // get file which upload
+      console.log(e.target.files[0]);
+     
+      const imgStoreArray = addStore.uploadimages
+            imgStoreArray.push(e.target.files[0])
+            SetAddStore({...addStore,uploadimages:imgStoreArray})
+            // convert
+            const url = URL.createObjectURL(e.target.files[0])
+            console.log(url);
+            setStorePreview(url)
+            const storeImageArray = storePreviewList
+            storeImageArray.push(url)
+            setStorePreviewList(storeImageArray)
+   }
+
+const resetUploadStoreForm = ()=>{
+  SetAddStore({  storename:"",storetagline:"",storedetails:"",storedescription:"",uploadimages:[]})
+  setStorePreview("")
+  setStorePreviewList([])
+
+}
+
+const handleUploadStore = async ()=>{
+
+  const{storename,storetagline,storedetails,storedescription,uploadimages}= addStore
+  if (!storename | !storetagline | !storedetails | !storedescription | uploadimages.length==0 ) {
+          toast.info("please fill the form completly")
+
+  }else{
+    // api call
+          const token = sessionStorage.getItem("token")
+          if (token) {
+              const reqHeader = {
+            "Authorization" : `Bearer ${token}`
+         }
+             const reqBody = new FormData()
+             for(let key in addStore){
+              if (key != "uploadimages") {
+                reqBody.append(key,addStore[key])
+                
+              }else{
+                addStore.uploadimages.forEach(imgfilestore=>{
+                  reqBody.append("uploadimages",imgfilestore)
+                })
+              }
+             }
+         
+             const result = await addStoreAPI(reqBody,reqHeader)
+             console.log(result);
+              if (result.status==200) {
+            toast.success("store Added successfully")
+         }else if (result.status==401) {
+            toast.warning(result.response.data)
+            
+         }else{
+            toast.error("something went wrong")
+         }
+             resetUploadStoreForm()
+            
+          }
+
+  }
+
 }
 
   return (
@@ -230,25 +305,25 @@ const handleUploadCloth = async ()=>{
       {/* Store Name */}
       <div className="space-y-1">
         <Label>Store Name</Label>
-        <Input placeholder="Ex: The Vintage Wardrobe" />
+        <Input value={addStore.storename} onChange={e => SetAddStore({...addStore, storename: e.target.value })}  placeholder="Ex: The Vintage Wardrobe" />
       </div>
 
       {/* Store Tagline */}
       <div className="space-y-1">
         <Label>Store Tagline</Label>
-        <Input placeholder="Ex: Curated Preloved Fits" />
+        <Input value={addStore.storetagline} onChange={e => SetAddStore({...addStore, storetagline: e.target.value })}  placeholder="Ex: Curated Preloved Fits" />
       </div>
 
       {/* Store Details */}
       <div className="space-y-1 md:col-span-2">
         <Label>Store Details</Label>
-        <Input placeholder="Ex: Streetwear · Y2K · Oversized · Vintage Denim" />
+        <Input value={addStore.storedetails} onChange={e => SetAddStore({...addStore, storedetails: e.target.value })}  placeholder="Ex: Streetwear · Y2K · Oversized · Vintage Denim" />
       </div>
 
       {/* Store Description */}
       <div className="space-y-1 md:col-span-2">
         <Label>Store Description</Label>
-        <textarea className="w-full border rounded-md px-3 py-2 min-h-90px outline-none" placeholder="Describe your store vibe, curation style, delivery, etc..." />
+        <textarea value={addStore.storedescription} onChange={e => SetAddStore({...addStore, storedescription: e.target.value })}  className="w-full border rounded-md px-3 py-2 min-h-90px outline-none" placeholder="Describe your store vibe, curation style, delivery, etc..." />
       </div>
 
       {/* Upload Images - 4 */}
@@ -256,9 +331,33 @@ const handleUploadCloth = async ()=>{
         <Label>Upload Images (Max 4)</Label>
 
         <label className="border-dashed border-2 border-gray-400 rounded-2xl h-40 flex flex-col items-center justify-center cursor-pointer hover:opacity-80 transition">
-          <Upload className="mb-2" />
-          <span className="text-sm">Click to upload store images</span>
-          <input type="file" className="hidden" multiple accept="image/*" />
+          {/* <Upload className="mb-2" />
+          <span className="text-sm">Click to upload store images</span> */}
+          <input onChange={e=>handleUploadStoreImage(e)} type="file" className="hidden" multiple accept="image/*" />
+      {
+  storePreview ? 
+   <div className='flex'>
+      {/* <img width={'100px'} height={'100px'} src={storePreview} className="mx-2 h-full object-fill" alt="upload" /> */}
+{
+  storePreviewList?.map((storeimgURL,index)=>(
+       <img key={index}  height={'100px'} src={storeimgURL} className="mx-1 md:w-25 w-20 md:h-35 h-29" alt="upload" />
+
+  ))
+}         
+{ storePreviewList.length<4 &&
+      <Upload className="md:mt-15 mt-10 md:mx-2 mx-1" />
+
+}
+   </div>
+
+   : 
+    <>
+      <Upload className="mb-2" />
+      <span className="text-sm">Click to upload images</span>
+    </>
+  
+}
+
         </label>
 
         <p className="text-xs text-gray-500 mt-1">You can upload up to 4 images</p>
@@ -267,12 +366,12 @@ const handleUploadCloth = async ()=>{
 
     {/* buttons */}
     <div className="px-2 md:px-4 pb-8 space-y-3">
-      <Button className="w-full bg-black text-white hover:opacity-80">
+      <Button onClick={handleUploadStore} className="w-full bg-black text-white hover:opacity-80">
         Add Store
       </Button>
 
       <SheetClose asChild>
-        <Button variant="outline" className="w-full border-black">
+        <Button onClick={resetUploadStoreForm} variant="outline" className="w-full border-black">
           Cancel
         </Button>
       </SheetClose>
@@ -411,7 +510,7 @@ const handleUploadCloth = async ()=>{
   ))
 }         
 { previewList.length<7 &&
-      <Upload className="mt-15 mx-2" />
+      <Upload className="md:mt-15 mt-5 md:mx-2 mx-1" />
 
 }
    </div>

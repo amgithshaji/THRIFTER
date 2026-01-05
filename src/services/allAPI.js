@@ -36,4 +36,14 @@ export const viewClothAPI = async(reqHeader,id)=>{
 return await commonAPI("GET",`${serverURL}/cloth/${id}/view`,{},reqHeader)
 
 }
+// add store
+export const addStoreAPI = async(reqBody,reqHeader)=>{
+return await commonAPI("POST",`${serverURL}/user/store/add`,reqBody,reqHeader)
 
+}
+
+// view store
+export const viewStoreAPI = async(reqHeader,sellermail)=>{
+return await commonAPI("GET",`${serverURL}/seller/${sellermail}/details`,{},reqHeader)
+
+}

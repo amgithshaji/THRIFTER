@@ -49,7 +49,7 @@ function App() {
         } />
         <Route path='/cloth/:id/details' element={<ClothDetails/>} />
         <Route path='/cloth' element={<Cloth/>} />
-        <Route path='/seller' element={<Seller/>} />
+        <Route path='/seller/:sellermail/details' element={<Seller/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/login' element={<Auth/>} />
         <Route path='/register' element={<Auth insideRegister ={true} />} />

@@ -63,7 +63,7 @@ function ClothDetails() {
                 {/* card 1 */}
                 <div className='grid md:grid-cols-2 grid-cols-1 h-screen md:ms-55 ms-4 gap-30' >
                     <div>
-                        <img className=' me-30 md:mt-1 mt-25  md:h-210 h-130 md:w-143 w-89 object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[1]}` : ""} alt="no img" />
+                        <img className=' me-30 md:mt-1 mt-25  md:h-210 h-130 md:w-143 w-89 object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[1]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
                     </div>
                     <div>
                         <div className=' md:mt-50  md:me-45 me-5'>
@@ -87,7 +87,7 @@ function ClothDetails() {
                                     <p>Product size available</p>
                                     <p className='font-semibold text-[13px]  ' >{cloth?.size}</p>
                                     <p>Exchange,return available</p>
-                                    <Link to={'/seller'}>
+                                    <Link to={`/seller/${cloth?.sellermail}/details`}>
                                         <p className='uppercase cursor-pointer' >seller details</p>
                                     </Link>
                                 </div>
@@ -109,29 +109,29 @@ function ClothDetails() {
                         </div>
                     </div>
                     {/* img */}
-                    <img className=' md:me-70 me-80 md:mt-50   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[2]}` : ""} alt="no img" />
+                    <img className=' md:me-70 me-80 md:mt-50   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[2]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
                 </div>
                 {/* grid 3 */}
                 <div className='grid md:grid-cols-2 grid-cols-1   mt-5 ms-4 md:gap-0 gap-5' >
                     <div className=''>
-                        <img className=' md:ms-20 me-80 md:mt-50   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[3]}` : ""} alt="no img" />
+                        <img className=' md:ms-20 me-80 md:mt-50   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[3]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
                     </div>
                     {/* img */}
-                    <img className=' md:ms-5 me-80 md:mt-50  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[4]}` : ""}
+                    <img className=' md:ms-5 me-80 md:mt-50  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[4]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"}
  alt="no img" />
                 </div>
                 {/* grid-4 */}
                 <div className='grid md:grid-cols-2 grid-cols-1    ms-4 md:gap-0 gap-5' >
                     <div className=''>
-                        <img className=' md:ms-20 me-80 md:mt-30 mt-5   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[5]}` : ""}alt="no img" />
+                        <img className=' md:ms-20 me-80 md:mt-30 mt-5   md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[5]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"}alt="no img" />
                     </div>
                     {/* img */}
-                    <img className=' md:ms-5 me-80 md:mt-30  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[6]}` : ""} alt="no img" />
+                    <img className=' md:ms-5 me-80 md:mt-30  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[6]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
                 </div>
                 {/* grid 5 */}
                 <div className='grid md:grid-cols-2 grid-cols-1    ms-4 md:gap-0 gap-5' >
                     <div className=''>
-                        <img className=' md:ms-20 me-80 md:mt-30 mt-5  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[0]}` : ""} alt="no img" />
+                        <img className=' md:ms-20 me-80 md:mt-30 mt-5  md:h-210 h-134 md:w-143  object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[0]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
                     </div>
                     {/* img */}
 
