@@ -26,8 +26,8 @@ return await commonAPI("POST",`${serverURL}/user/clothes/add`,reqBody,reqHeader)
 }
 
 // get cloth: user getcloth
-export const getClothAPI = async(reqHeader)=>{
-return await commonAPI("GET",`${serverURL}/clothes/all`,{},reqHeader)
+export const getClothAPI = async(reqHeader,searchKey)=>{
+return await commonAPI("GET",`${serverURL}/clothes/all?search=${searchKey}`,{},reqHeader)
 
 }
 

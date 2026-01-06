@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import Footer from '@/component/Footer'
 import { IoHeartOutline } from "react-icons/io5";
 import { getClothAPI } from '@/services/allAPI';
 import serverURL from '@/services/serverURL';
+import { searchContext } from '@/contextAPI/ShareContext';
 
 
 function Cloth() {
-
+  const { searchKey, setSearchkey } = useContext(searchContext)
   const [token,setToken] = useState("")
   const [allClothes,setAllClothes] = useState([])
   console.log(allClothes);
@@ -21,13 +22,13 @@ function Cloth() {
     
   }
 
-},[])
+},[searchKey])
 
 const getAllClothes = async (token)=>{
   const reqHeader = {
   "Authorization" : `Bearer ${token}`
 }
-const result = await getClothAPI(reqHeader)
+const result = await getClothAPI(reqHeader,searchKey)
 if (result.status==200){
   setAllClothes(result.data)
 
@@ -68,7 +69,7 @@ if (result.status==200){
     {/* Search bar */}
     <div className="h-[20vh] flex items-center justify-center">
       <div className="w-full max-w-2xl px-8">
-        <input type="text" placeholder="WHAT ARE YOU LOOKING FOR?" className="w-full text-center bg-transparent outline-none text-[11px] tracking-[0.2em] uppercase placeholder-black"/>
+        <input value={searchKey} onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="WHAT ARE YOU LOOKING FOR?" className="w-full text-center bg-transparent outline-none text-[11px] tracking-[0.2em] uppercase placeholder-black"/>
         <div className="mt-3 h-px w-full bg-gray-300"></div>
       </div>
     </div>
@@ -99,7 +100,14 @@ if (result.status==200){
       </div>
       ))
       :
-          <p className='font-bold '>cloth not found..</p>
+<div className="col-span-full w-full min-h-[60vh] flex flex-col justify-center items-center text-center">
+  <p className="text-xs tracking-[0.3em] text-gray-400 mb-3">NO RESULTS</p>
+  <h1 className="text-3xl font-light tracking-wide mb-4">This thrift has no finds</h1>
+  <p className="text-sm text-gray-500 mb-6">Try searching something else or check back later — new drops happen often.</p>
+  <a href="/cloth" className="underline text-sm tracking-wide hover:opacity-70">Browse all clothes</a>
+</div>
+
+
 
     }
   

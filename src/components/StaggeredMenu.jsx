@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 // import './StaggeredMenu.css';
 import { IoIosSearch } from "react-icons/io";
@@ -7,6 +7,7 @@ import { BiShoppingBag } from "react-icons/bi";
 import { IoHeartOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge"
 import { ToastContainer, toast,Slide  } from 'react-toastify';
+import { searchContext } from '@/contextAPI/ShareContext';
 
 
 
@@ -52,8 +53,8 @@ export const StaggeredMenu = ({
 
   const[name,setName] = useState("")
   const[token,setToken] = useState("")
-  const[searchKey,setSearchkey] = useState("")
-// console.log(searchKey);
+  // const[searchKey,setSearchkey] = useState("")
+  const { searchKey, setSearchkey } = useContext(searchContext)
 const navigate = useNavigate()
   
   useEffect(()=>{
