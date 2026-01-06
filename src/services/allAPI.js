@@ -25,7 +25,7 @@ return await commonAPI("POST",`${serverURL}/user/clothes/add`,reqBody,reqHeader)
 
 }
 
-// add cloth: user add cloth
+// get cloth: user getcloth
 export const getClothAPI = async(reqHeader)=>{
 return await commonAPI("GET",`${serverURL}/clothes/all`,{},reqHeader)
 
@@ -45,5 +45,16 @@ return await commonAPI("POST",`${serverURL}/user/store/add`,reqBody,reqHeader)
 // view store
 export const viewStoreAPI = async(reqHeader,sellermail)=>{
 return await commonAPI("GET",`${serverURL}/seller/${sellermail}/details`,{},reqHeader)
+
+}
+// get store clothes
+export const viewStoreClothesAPI = async(reqHeader,sellermail)=>{
+return await commonAPI("GET",`${serverURL}/seller/${sellermail}/clothes`,{},reqHeader)
+
+}
+
+// get cloth: user getcloth
+export const getClothDetailsAPI = async(reqHeader,id)=>{
+return await commonAPI("GET",`${serverURL}/clothdetails/${id}/view`,{},reqHeader)
 
 }

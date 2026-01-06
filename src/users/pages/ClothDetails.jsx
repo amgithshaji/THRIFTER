@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useParams } from 'react-router-dom'
 import Footer from '@/component/Footer'
-import { viewClothAPI } from '@/services/allAPI'
+import { getClothDetailsAPI, viewClothAPI } from '@/services/allAPI'
 import serverURL from '@/services/serverURL'
+import ShinyText from '@/components/ShinyText'
+import { IoHeartOutline } from "react-icons/io5";
+
 
 
 
@@ -19,14 +22,26 @@ function ClothDetails() {
         const usertoken = sessionStorage.getItem("token")
         setToken(usertoken)
         getClothDetails()
+        getClothDetailsCloth()
       }
     
-    },[])
+    },[id])
 
+    useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [id])
 
+      
+    const [clothDetailsCloth,setClothDetailsCloth]= useState([])
+    console.log(clothDetailsCloth);
+    
+     
 
     const [cloth,setCloth] = useState({})
-    console.log(cloth);
+    // console.log(cloth);
 
     const images = cloth?.uploadimages || []
 
@@ -53,6 +68,26 @@ function ClothDetails() {
      }
     }
     
+
+    const  getClothDetailsCloth = async ()=>{
+    const token = sessionStorage.getItem("token")
+    if (token) {
+         const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+      const result = await getClothDetailsAPI(reqHeader,id)
+      if (result.status==200) {
+        setClothDetailsCloth(result.data)
+        
+      }else{
+      console.log(result);
+      
+      }
+    }
+   
+    }
+
+
     return (
         <div>
             <Header/>
@@ -145,6 +180,52 @@ function ClothDetails() {
                <p className='text x-l font-bold my-15' >Please <Link to={'/login'} className='underline text-blue-500' >Login </Link>to explore more </p>
                 </div>
         }
+                    {/* section 4 */}
+  <div style={{ fontFamily: 'Raleway, sans-serif' }} className='ms-20 mt-10  text-[16px] font-light ' >
+                <div>
+                    <ShinyText
+                        text="you may be interested in"
+                        speed={3}
+                        className='custom-class uppercase'
+                    />
+                </div>
+
+            </div>
+{/* cards */}
+<div className=" md:px-12 py-10">
+  <div className="grid grid-cols-2 md:grid-cols-4 md:gap-x-3 md:gap-y-16">
+
+       {/* Card */}
+    {
+      clothDetailsCloth?.length>0?
+      clothDetailsCloth?.map(cloth=>(
+         <div key={cloth?._id} className="group">
+        <div  className="relative bg-[#f5f5f5]">
+          <button className="absolute top-4 right-4 z-20 cursor-pointer">
+        <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+      </button>
+          
+         <Link to={`/cloth/${cloth?._id}/details`}>
+              <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover"/>
+         </Link>
+        </div>
+  
+        <div className="mt-4 text-[12px] tracking-wide">
+          <p className="mb-1">{cloth?.clothname}</p>
+          <p className="font-medium">₹ {cloth?.price}</p>
+        </div>
+      </div>
+      ))
+      :
+          <p className='font-bold '>cloth not found..</p>
+
+    }
+  
+
+ 
+
+  </div>
+</div>
             <Footer/>
         </div>
     )

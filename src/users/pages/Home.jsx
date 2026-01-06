@@ -207,15 +207,25 @@ function Home() {
             </h1>
           </div>
      <div style={{ fontFamily: "Playfair Display, serif" }}  className='text-center ' >
-        <img
+        {/* <img
           className=" md:mt-20 mt-5 md:ms-100 ms-14 md:h-95  h-40 md:w-180 w-70  object-center object-cover"
           src="https://i.pinimg.com/736x/fc/b8/f7/fcb8f7c246d81ad733ecb907dd52a344.jpg"
           alt="no img"
-        />
-  <Link to={'cloth'}>
+        /> */}
+          <Link to={'cloth'}>
+
+    <video
+    className="md:mt-10 mt-4 md:ms-100 ms-14 md:h-95  h-40 md:w-180 w-70  object-center object-cover"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src="/discovercloth.mp4" type="video/mp4" />
+  </video>
     <StarBorder
       as="button"
-      className="custom-class mt-3 "
+      className="custom-class md:mt-15 mt-8 "
       color="red"
       speed="5s"
     >
@@ -245,12 +255,14 @@ function Home() {
               </div>
   <Logo/>
      </div>
-    </div>
+  </div>
   <div>
-  
+
   </div>
         </div>
+
         <Footer/>
+
    </div>
 
   )

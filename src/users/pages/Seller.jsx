@@ -3,23 +3,36 @@ import Header from '../components/Header'
 import ShinyText from '@/components/ShinyText'
 import { Link, useParams } from 'react-router-dom'
 import Footer from '@/component/Footer'
-import { viewClothAPI, viewStoreAPI } from '@/services/allAPI'
+import { viewClothAPI, viewStoreAPI, viewStoreClothesAPI } from '@/services/allAPI'
 import serverURL from '@/services/serverURL'
+import { IoHeartOutline } from "react-icons/io5";
+
 
 
 function Seller() {
 
   const{sellermail} = useParams()
-  // const sellermail = decodeURIComponent(sellermail)
+  const[storeClothes,setStoreClothes] = useState([])
+  console.log(storeClothes);
+  
 const [store,setStore] = useState({})
     const images = store?.uploadimages || []
 
-console.log(store);
+// console.log(store);
 
 useEffect(()=>{
 getStoreDetails()
+getStoreClothes()
 },[])
 
+    useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])
+
+// get store
 const getStoreDetails = async ()=>{
   const token = sessionStorage.getItem("token")
   if (token) {
@@ -37,6 +50,23 @@ const getStoreDetails = async ()=>{
       }
     
   }
+}
+// get store clothes
+const getStoreClothes = async ()=>{
+const token = sessionStorage.getItem("token")
+if (token) {
+         const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+      const result = await viewStoreClothesAPI(reqHeader,sellermail)
+      if (result.status==200) {
+        setStoreClothes(result.data)
+        
+      }else{
+        console.log(result);
+        
+      }
+}
 }
 
     return (
@@ -203,77 +233,34 @@ const getStoreDetails = async ()=>{
 <div className=" md:px-12 py-10">
   <div className="grid grid-cols-2 md:grid-cols-4 md:gap-x-3 md:gap-y-16">
 
-    {/* Card */}
-   <div className="group">
-      <div className="relative bg-[#f5f5f5]">
-       <Link to={'/clothdetails'}>
-            <img
-              src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-              alt=""
-              className="w-full md:h-105 h-80 object-cover"
-            />
-       </Link>
+       {/* Card */}
+    {
+      storeClothes?.length>0?
+      storeClothes?.map(cloth=>(
+         <div key={cloth?._id} className="group">
+        <div  className="relative bg-[#f5f5f5]">
+          <button className="absolute top-4 right-4 z-20 cursor-pointer">
+        <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
+      </button>
+          
+         <Link to={`/cloth/${cloth?._id}/details`}>
+              <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover"/>
+         </Link>
+        </div>
+  
+        <div className="mt-4 text-[12px] tracking-wide">
+          <p className="mb-1">{cloth?.clothname}</p>
+          <p className="font-medium">₹ {cloth?.price}</p>
+        </div>
       </div>
+      ))
+      :
+          <p className='font-bold '>cloth not found..</p>
 
-      <div className="mt-4 text-[12px] tracking-wide">
-        <p className="mb-1">Monogram Tartan Denim Pants</p>
-        <p className="font-medium">₹ 2,20,000.00</p>
-      </div>
-    </div>
+    }
+  
 
-    {/* Repeat Card */}
-    <div className="group">
-      <div className="relative bg-[#f5f5f5]">
-       <Link to={'/clothdetails'}>
-            <img
-              src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-              alt=""
-              className="w-full md:h-105 h-80 object-cover"
-            />
-       </Link>
-      </div>
-
-      <div className="mt-4 text-[12px] tracking-wide">
-        <p className="mb-1">Monogram Tartan Denim Pants</p>
-        <p className="font-medium">₹ 2,20,000.00</p>
-      </div>
-    </div>
-
-    {/* Card */}
-     <div className="group">
-      <div className="relative bg-[#f5f5f5]">
-       <Link to={'/clothdetails'}>
-            <img
-              src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-              alt=""
-              className="w-full md:h-105 h-80 object-cover"
-            />
-       </Link>
-      </div>
-
-      <div className="mt-4 text-[12px] tracking-wide">
-        <p className="mb-1">Monogram Tartan Denim Pants</p>
-        <p className="font-medium">₹ 2,20,000.00</p>
-      </div>
-    </div>
-
-    {/* Card */}
-     <div className="group">
-      <div className="relative bg-[#f5f5f5]">
-       <Link to={'/clothdetails'}>
-            <img
-              src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-              alt=""
-              className="w-full md:h-105 h-80 object-cover"
-            />
-       </Link>
-      </div>
-
-      <div className="mt-4 text-[12px] tracking-wide">
-        <p className="mb-1">Monogram Tartan Denim Pants</p>
-        <p className="font-medium">₹ 2,20,000.00</p>
-      </div>
-    </div>
+ 
 
   </div>
 </div>
