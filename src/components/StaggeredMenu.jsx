@@ -8,6 +8,8 @@ import { IoHeartOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge"
 import { ToastContainer, toast,Slide  } from 'react-toastify';
 import { searchContext } from '@/contextAPI/ShareContext';
+import { wishlistContext } from '@/contextAPI/WishlistContext';
+
 
 
 
@@ -55,6 +57,8 @@ export const StaggeredMenu = ({
   const[token,setToken] = useState("")
   // const[searchKey,setSearchkey] = useState("")
   const { searchKey, setSearchkey } = useContext(searchContext)
+  const { wishlist } = useContext(wishlistContext)
+
 const navigate = useNavigate()
   
   useEffect(()=>{
@@ -463,9 +467,17 @@ const handleSearchMobile = ()=>{
   {/* Wishlist */}
   <Link to="/wishlist" className="relative flex items-center">
     <IoHeartOutline className="text-[18px]" />
-    <Badge variant="outline" className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
-      1
+  {
+  wishlist.length > 0 && (
+    <Badge
+      variant="outline"
+      className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]"
+    >
+      {wishlist.length}
     </Badge>
+  )
+}
+
   </Link>
 
   {/* Shopping Bag */}

@@ -2,17 +2,26 @@ import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import Footer from '@/component/Footer'
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline,IoHeart } from "react-icons/io5";
 import { getClothAPI } from '@/services/allAPI';
 import serverURL from '@/services/serverURL';
 import { searchContext } from '@/contextAPI/ShareContext';
+import { wishlistContext } from '@/contextAPI/WishlistContext';
 
 
 function Cloth() {
+  const [selectedGender, setSelectedGender] = useState("all")
+
   const { searchKey, setSearchkey } = useContext(searchContext)
+  const { wishlist, addToWishlist, removeFromWishlist } = useContext(wishlistContext)
+
   const [token,setToken] = useState("")
   const [allClothes,setAllClothes] = useState([])
   console.log(allClothes);
+
+const filteredClothes =
+  selectedGender === "all"? allClothes: allClothes.filter(cloth => cloth.gender?.toLowerCase() === selectedGender)
+
 
   useEffect(()=>{
   if (sessionStorage.getItem("token")){
@@ -56,7 +65,7 @@ if (result.status==200){
         <div  style={{ fontFamily: 'Raleway, sans-serif' }}>
   <div className="w-full bg-white">
     {/* Category buttons */}
-    <div className="flex gap-4 px-10 pt-9 md:ms-20 text-[12px] text-bold tracking-[0.09em] uppercase md:mt-40 mt-25 ">
+    {/* <div className="flex gap-4 px-10 pt-9 md:ms-20 text-[12px] text-bold tracking-[0.09em] uppercase md:mt-40 mt-25 ">
       <button className="hover:font-semibold transition cursor-pointer ">
         WOMAN
       </button>
@@ -64,7 +73,38 @@ if (result.status==200){
         MAN
       </button>
     
-    </div>
+    </div> */}
+    <div className="flex gap-4 px-10 pt-9 md:ms-20 text-[12px] tracking-[0.09em] uppercase md:mt-40 mt-25">
+
+  <button
+    onClick={() => setSelectedGender("women")}
+    className={`cursor-pointer hover:font-semibold transition ${
+      selectedGender === "women" ? "font-semibold " : ""
+    }`}
+  >
+    WOMAN
+  </button>
+
+  <button
+    onClick={() => setSelectedGender("men")}
+    className={`cursor-pointer hover:font-semibold transition ${
+      selectedGender === "men" ? "font-semibold " : ""
+    }`}
+  >
+    MAN
+  </button>
+
+  <button
+    onClick={() => setSelectedGender("all")}
+    className={`cursor-pointer hover:font-semibold transition ${
+      selectedGender === "all" ? "font-semibold " : ""
+    }`}
+  >
+    ALL
+  </button>
+
+</div>
+
   
     {/* Search bar */}
     <div className="h-[20vh] flex items-center justify-center">
@@ -80,20 +120,43 @@ if (result.status==200){
   
       {/* Card */}
     {
-      allClothes?.length>0?
-      allClothes?.map(cloth=>(
+      filteredClothes?.length>0?
+      filteredClothes?.map(cloth=>(
          <div key={cloth?._id} className="group">
         <div  className="relative bg-[#f5f5f5]">
-          <button className="absolute top-4 right-4 z-20 cursor-pointer">
-        <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
-      </button>
+   
+
+<button
+  onClick={(e) => {
+    e.stopPropagation()
+
+    const isWishlisted = wishlist.some(
+      item => item.clothId?._id === cloth._id
+    )
+
+    isWishlisted
+      ? removeFromWishlist(cloth._id) // ❤️ → 🤍 (DB delete)
+      : addToWishlist(cloth._id)      // 🤍 → ❤️ (DB add)
+  }}
+  className="absolute top-4 right-4 z-20 cursor-pointer"
+>
+  {
+    wishlist.some(item => item.clothId?._id === cloth._id)
+      ? <IoHeart className="text-red-500" />
+      : <IoHeartOutline />
+  }
+</button>
+
+
+
+
           
          <Link to={`/cloth/${cloth?._id}/details`}>
               <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover"/>
          </Link>
         </div>
   
-        <div className="mt-4 text-[12px] tracking-wide">
+        <div className="mt-4 text-[12px] tracking-wide uppercase">
           <p className="mb-1">{cloth?.clothname}</p>
           <p className="font-medium">₹ {cloth?.price}</p>
         </div>

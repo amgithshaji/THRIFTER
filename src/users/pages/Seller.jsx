@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import ShinyText from '@/components/ShinyText'
 import { Link, useParams } from 'react-router-dom'
 import Footer from '@/component/Footer'
 import { viewClothAPI, viewStoreAPI, viewStoreClothesAPI } from '@/services/allAPI'
 import serverURL from '@/services/serverURL'
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline,IoHeart } from "react-icons/io5";
+import { wishlistContext } from '@/contextAPI/WishlistContext'
+
 
 
 
 function Seller() {
+    const { wishlist, addToWishlist, removeFromWishlist } = useContext(wishlistContext)
 
   const{sellermail} = useParams()
   const[storeClothes,setStoreClothes] = useState([])
@@ -239,9 +242,26 @@ if (token) {
       storeClothes?.map(cloth=>(
          <div key={cloth?._id} className="group">
         <div  className="relative bg-[#f5f5f5]">
-          <button className="absolute top-4 right-4 z-20 cursor-pointer">
-        <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
-      </button>
+       <button
+  onClick={(e) => {
+    e.stopPropagation()
+
+    const isWishlisted = wishlist.some(
+      item => item.clothId?._id === cloth._id
+    )
+
+    isWishlisted
+      ? removeFromWishlist(cloth._id) // ❤️ → 🤍 (DB delete)
+      : addToWishlist(cloth._id)      // 🤍 → ❤️ (DB add)
+  }}
+  className="absolute top-4 right-4 z-20 cursor-pointer"
+>
+  {
+    wishlist.some(item => item.clothId?._id === cloth._id)
+      ? <IoHeart className="text-red-500" />
+      : <IoHeartOutline />
+  }
+</button>
           
          <Link to={`/cloth/${cloth?._id}/details`}>
               <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover"/>

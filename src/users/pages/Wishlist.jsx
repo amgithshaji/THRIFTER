@@ -1,9 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import { RxCross2 } from "react-icons/rx";
 import Footer from '@/component/Footer';
+import { wishlistContext } from '@/contextAPI/WishlistContext';
+import serverURL from '@/services/serverURL';
+
+
+
+
 function Wishlist() {
+  const { wishlist, removeFromWishlist } = useContext(wishlistContext)
+    useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])  
+
+const [userName,setUserName] = useState("")
+useEffect(()=>{
+  if(sessionStorage.getItem("token") && sessionStorage.getItem("user")){
+    const user = JSON.parse(sessionStorage.getItem("user"))
+    setUserName(user?.username)
+  }
+
+},[])
+
   return (
       <div style={{ fontFamily: 'Raleway, sans-serif' }}>
                 <Header/>
@@ -25,104 +48,65 @@ function Wishlist() {
     {/* alert */}
   <div className="mt-6  md:mx-25 mx-6  w-85 p-4">
   <p className="text-[12px] uppercase font-bold">
-    amgith's List
+    {userName}'s List
   </p>
 </div>
 
 {/* repeat card */}
-<div className=" md:px-12 px-3 py-10">
-  <div className="grid  md:grid-cols-4 md:gap-5 md:ms-9 ms-8 ">
- <div className="group  md:w-75 w-75  md:mt-7 ">
-    
+<div className="md:px-12 px-3 py-10">
+  <div className="grid md:grid-cols-4 md:gap-5 md:ms-9 ms-8">
+
+    {
+      wishlist.length > 0 ? wishlist.map(item => (
+        <div key={item._id} className="group md:w-75 w-75 md:mt-7">
+
           {/* IMAGE + REMOVE ICON */}
           <div className="relative bg-[#f5f5f5]">
-            
-            {/* cross icon */}
-            <button className="absolute top-3 right-3 z-20 cursor-pointer">
-              <RxCross2 className='text-[18px]' />
-            </button>
-    
-            <Link>
-              <img
-                src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-                className="w-full md:h-105  object-cover"
-                alt="product img"
-              />
+
+            {/* ❌ REMOVE */}
+         <button
+  onClick={() => removeFromWishlist(item.clothId._id)}
+  className="absolute top-3 right-3 z-20 cursor-pointer"
+>
+  <RxCross2 className="text-[18px]" />
+</button>
+
+
+            <Link to={`/cloth/${item.clothId._id}/details`}>
+            <img
+  src={
+    item.clothId?.uploadimages?.length > 0
+      ? `${serverURL}/uploads/${item.clothId.uploadimages[0]}`
+      : "https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
+  }
+  className="w-full md:h-105 object-cover"
+  alt={item.clothId?.clothname}
+/>
+
             </Link>
           </div>
-    
+
           {/* TEXT AREA */}
           <div className="mt-3 text-[12px] tracking-wide">
-    
-            {/* product name with ... */}
-            <p className="uppercase truncate">
-              Monogram Tartan Denim Pants
-            </p>
-    
-            {/* size + color */}
-            {/* <p className="text-gray-900 mt-1">
-              M | BLACK
-            </p> */}
-    
-            {/* price */}
-            <p className="mt-1">
-              ₹ 2,20,000.00
-            </p>
-    
+            <p className="uppercase truncate">{item.clothId?.clothname}</p>
+            <p className="mt-1">₹ {item.clothId?.price}</p>
           </div>
 
-  <button className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
-        add
-      </button>
-      
-    </div>
-    {/* repeat card */}
-<div className="group  md:w-75 w-75  md:mt-7 ">
-    
-          {/* IMAGE + REMOVE ICON */}
-          <div className="relative bg-[#f5f5f5]">
-            
-            {/* cross icon */}
-            <button className="absolute top-3 right-3 z-20 cursor-pointer">
-              <RxCross2 className='text-[18px]' />
-            </button>
-    
-            <Link>
-              <img
-                src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-                className="w-full md:h-105  object-cover"
-                alt="product img"
-              />
-            </Link>
-          </div>
-    
-          {/* TEXT AREA */}
-          <div className="mt-3 text-[12px] tracking-wide">
-    
-            {/* product name with ... */}
-            <p className="uppercase truncate">
-              Monogram Tartan Denim Pants
-            </p>
-    
-            {/* size + color */}
-            {/* <p className="text-gray-900 mt-1">
-              M | BLACK
-            </p> */}
-    
-            {/* price */}
-            <p className="mt-1">
-              ₹ 2,20,000.00
-            </p>
-    
-          </div>
+          <button className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
+            add
+          </button>
 
-  <button className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
-        add
-      </button>
-      
-    </div>  
-    </div>
+        </div>
+      )) : (
+        <p className="text-center text-sm tracking-widest mt-20">
+          YOUR WISHLIST IS EMPTY
+        </p>
+      )
+    }
+
+  </div>
 </div>
+
 
 
 

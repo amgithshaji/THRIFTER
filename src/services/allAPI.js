@@ -58,3 +58,18 @@ export const getClothDetailsAPI = async(reqHeader,id)=>{
 return await commonAPI("GET",`${serverURL}/clothdetails/${id}/view`,{},reqHeader)
 
 }
+// get wishlist
+export const getWishlistAPI  = async(reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/wishlist`,{},reqHeader)
+
+}
+// add wishlist
+export const addWishlistAPI  = async(reqHeader,clothId)=>{
+return await commonAPI("POST",`${serverURL}/wishlist/add`,{clothId},reqHeader)
+
+}
+// delete wishlist
+export const removeWishlistAPI  = async(reqHeader,clothId)=>{
+return await commonAPI("DELETE",`${serverURL}/wishlist/${clothId}/delete`,{},reqHeader)
+
+}
