@@ -21,3 +21,14 @@ html, body {
 } */
 
 
+@import "tailwindcss";
+
+@theme inline {
+  --animate-scroll: scroll var(--animation-duration, 100s) var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-100% - 0.9rem));
+    }
+  }
+}

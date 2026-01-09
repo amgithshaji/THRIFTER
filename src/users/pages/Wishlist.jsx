@@ -5,11 +5,16 @@ import { RxCross2 } from "react-icons/rx";
 import Footer from '@/component/Footer';
 import { wishlistContext } from '@/contextAPI/WishlistContext';
 import serverURL from '@/services/serverURL';
+import { cartContext } from '@/contextAPI/CartContext';
+import { addToCartAPI } from '@/services/allAPI';
+
 
 
 
 
 function Wishlist() {
+  const { fetchCart } = useContext(cartContext)
+
   const { wishlist, removeFromWishlist } = useContext(wishlistContext)
     useEffect(() => {
   window.scrollTo({
@@ -26,6 +31,33 @@ useEffect(()=>{
   }
 
 },[])
+
+const handleAddToCartFromWishlist = async (clothId) => {
+  const token = sessionStorage.getItem("token")
+
+  if (token) {
+        const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+  
+  try {
+    // 1️⃣ add item to cart
+    await addToCartAPI(reqHeader, clothId)
+
+    // 2️⃣ remove item from wishlist
+    await removeFromWishlist(clothId)
+
+    // 3️⃣ refresh cart badge / cart page
+    fetchCart()
+  } catch (err) {
+    console.log(err)
+  }
+  }
+
+ 
+
+}
+
 
   return (
       <div style={{ fontFamily: 'Raleway, sans-serif' }}>
@@ -92,7 +124,7 @@ useEffect(()=>{
             <p className="mt-1">₹ {item.clothId?.price}</p>
           </div>
 
-          <button className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
+          <button onClick={() => handleAddToCartFromWishlist(item.clothId._id)} className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
             add
           </button>
 

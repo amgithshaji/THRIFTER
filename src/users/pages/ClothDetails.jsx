@@ -7,6 +7,10 @@ import serverURL from '@/services/serverURL'
 import ShinyText from '@/components/ShinyText'
 import { IoHeartOutline,IoHeart } from "react-icons/io5";
 import { wishlistContext } from '@/contextAPI/WishlistContext'
+import { cartContext } from '@/contextAPI/CartContext'
+import { addToCartAPI } from '@/services/allAPI'
+
+
 
 
 
@@ -18,7 +22,8 @@ function ClothDetails() {
   
     const{id} = useParams()
     // console.log(id);
-    
+    const { fetchCart } = useContext(cartContext)
+
 
       const [token,setToken] = useState("")
     
@@ -91,6 +96,26 @@ function ClothDetails() {
     }
    
     }
+   const handleAddToCart = async () => {
+  const token = sessionStorage.getItem("token")
+
+  if (token) {
+       const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+      
+  try {
+    await addToCartAPI(reqHeader, cloth?._id)
+    fetchCart() 
+    alert("Item added to cart")
+  } catch (err) {
+    console.log(err)
+  }
+}
+  }
+
+ 
+
 
 
     return (
@@ -108,12 +133,43 @@ function ClothDetails() {
                     <div>
                         <div className=' md:mt-50  md:me-45 me-5'>
                             <div>
+                            <div className="mt-4 text-[18px] uppercase font-light">
+
+  {/* name + heart */}
+  <div className="flex items-center justify-between mb-1">
+    <p className="truncate">{cloth?.clothname}</p>
+
+    <button
+      onClick={(e) => {
+        e.stopPropagation()
+
+        const isWishlisted = wishlist.some(
+          item => item.clothId?._id === cloth._id
+        )
+
+        isWishlisted
+          ? removeFromWishlist(cloth._id)
+          : addToWishlist(cloth._id)
+      }}
+      className="cursor-pointer"
+    >
+      {
+        wishlist.some(item => item.clothId?._id === cloth._id)
+          ? <IoHeart className="text-red-500 text-[18px]" />
+          : <IoHeartOutline className="text-[18px]" />
+      }
+    </button>
+  </div>
+
+  <p className="text-[18px] font-light uppercase">₹ {cloth?.price}</p>
+</div>
+{/* 
                                 <p className='text-[18px] font-light uppercase' >{cloth?.clothname}</p>
-                                <p className='text-[18px] font-light uppercase' >₹ {cloth?.price}</p>
+                                <p className='text-[18px] font-light uppercase' >₹ {cloth?.price}</p> */}
                                 <p className='text-[10px] font-light mt-1 tracking-[1px] uppercase' >MRP INCL. ALL TAXES</p>
                                 <hr className='mt-10  border-black' />
                                 <p className='text-[11px] font-base mt-9 uppercase' >{cloth?.clothcolor} | {cloth?.productid} </p>
-                                <button className="w-full border mt-8 border-black py-3 text-xs tracking-widest uppercase hover:text-gray-700 transition cursor-pointer">
+                                <button onClick={handleAddToCart} className="w-full border mt-8 border-black py-3 text-xs tracking-widest uppercase hover:text-gray-700 transition cursor-pointer">
                                     ADD
                                 </button>
 

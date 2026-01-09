@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ToastContainer, toast,Slide  } from 'react-toastify';
 import { searchContext } from '@/contextAPI/ShareContext';
 import { wishlistContext } from '@/contextAPI/WishlistContext';
+import { cartContext } from '@/contextAPI/CartContext';
 
 
 
@@ -58,6 +59,7 @@ export const StaggeredMenu = ({
   // const[searchKey,setSearchkey] = useState("")
   const { searchKey, setSearchkey } = useContext(searchContext)
   const { wishlist } = useContext(wishlistContext)
+  const {cartItems} = useContext(cartContext)
 
 const navigate = useNavigate()
   
@@ -441,9 +443,9 @@ const handleSearchMobile = ()=>{
   {/* Search (Desktop) */}
   <div className="hidden sm:flex flex-col items-end">
 <Link  >
-      <input onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="SEARCH" className="bg-transparent outline-none text-[10px] tracking-[0.2em] uppercase placeholder-black pr-2"/>
+      <input onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="SEARCH" className="bg-transparent outline-none text-[11px] tracking-[0.2em] uppercase placeholder-black pr-2"/>
 </Link>
-    <div className="h-px w-32 bg-black">    <IoIosSearch onClick={handleSearch} className='ms-27' style={{"marginTop":"-19px"}} />
+    <div className="h-px w-34 bg-black">    <IoIosSearch onClick={handleSearch} className='ms-29' style={{"marginTop":"-19px"}} />
 </div>
   </div>
 
@@ -468,11 +470,8 @@ const handleSearchMobile = ()=>{
   <Link to="/wishlist" className="relative flex items-center">
     <IoHeartOutline className="text-[18px]" />
   {
-  wishlist.length > 0 && (
-    <Badge
-      variant="outline"
-      className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]"
-    >
+  wishlist?.length > 0 && (
+    <Badge variant="outline"className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
       {wishlist.length}
     </Badge>
   )
@@ -483,9 +482,14 @@ const handleSearchMobile = ()=>{
   {/* Shopping Bag */}
   <Link to="/cart" className="relative flex items-center">
     <BiShoppingBag className="text-[18px]" />
-    <Badge variant="outline" className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
-      0
-    </Badge>
+   {
+    cartItems?.length > 0 &&
+   ( <Badge variant="outline" className="ml-1 px-1 min-w-[1.2rem] h-5 flex justify-center md:text-[14px]">
+      {cartItems.length}
+    </Badge>)
+    }
+
+
   </Link>
 </div>
 {/* --- End of Navigation Actions --- */}

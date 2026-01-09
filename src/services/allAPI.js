@@ -73,3 +73,23 @@ export const removeWishlistAPI  = async(reqHeader,clothId)=>{
 return await commonAPI("DELETE",`${serverURL}/wishlist/${clothId}/delete`,{},reqHeader)
 
 }
+// get cart
+export const getCartAPI  = async(reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/cart`,{},reqHeader)
+
+}
+// add cart
+export const addToCartAPI  = async(reqHeader,clothId)=>{
+return await commonAPI("POST",`${serverURL}/cart/add`,{clothId},reqHeader)
+
+}
+// delete cart
+export const removeCartAPI = async(reqHeader,clothId)=>{
+return await commonAPI("DELETE",`${serverURL}/cart/${clothId}/delete`,{},reqHeader)
+
+}
+// decrease cart
+export const decreaseCartAPI = async(reqHeader,clothId)=>{
+return await commonAPI("PUT",`${serverURL}/cart/decrease/${clothId}`,{},reqHeader)
+
+}

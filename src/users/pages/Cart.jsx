@@ -1,10 +1,84 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import { RxCross2 } from "react-icons/rx";
 import Footer from '@/component/Footer';
+import { cartContext } from '@/contextAPI/CartContext';
+import serverURL from '@/services/serverURL';
+import { addToCartAPI, decreaseCartAPI, removeCartAPI } from '@/services/allAPI'
+
+
+
+
+
+
+
 
 function Cart() {
+  const { cartItems, fetchCart } = useContext(cartContext)
+  
+
+useEffect(() => {
+  fetchCart()
+}, [])
+
+// delete cart item
+const handleRemove = async (clothId) => {
+  const token = sessionStorage.getItem("token")
+
+     const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+
+  try {
+    await removeCartAPI(reqHeader, clothId)
+    fetchCart() // 🔥 refresh cart after delete
+  } catch (err) {
+    console.log(err)
+  }
+}
+const totalPrice = cartItems.reduce(
+  (sum, item) => sum + item.clothId.price * item.quantity,
+  0
+)
+
+// increase quantity (+)
+const handleIncrease = async (clothId) => {
+  const token = sessionStorage.getItem("token")
+
+    const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+
+  try {
+    await addToCartAPI(reqHeader, clothId)
+    fetchCart()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// decrease quantity (-)
+const handleDecrease = async (clothId, quantity) => {
+  const token = sessionStorage.getItem("token")
+
+    const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+
+  try {
+    if (quantity > 1) {
+      await decreaseCartAPI(reqHeader, clothId)
+    } else {
+      // quantity === 1 → remove item
+      await removeCartAPI(reqHeader, clothId)
+    }
+    fetchCart()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
   return (
     <div  style={{ fontFamily: 'Raleway, sans-serif' }} className='md:h-470 h-670' >
                 <Header/>
@@ -27,22 +101,27 @@ function Cart() {
     The items in your basket are not reserved until you complete your purchase.
   </p>
 </div>
-{/* repeat card */}
+{/*  card */}
 <div className=" md:px-12 px-3 py-10">
   <div className="grid  md:grid-cols-4 md:gap-5 md:ms-9 ms-8 ">
- <div className="group  md:w-75 w-75  md:mt-7 ">
+ {
+  cartItems?.length>0?
+  cartItems.map(item=>(
+    <div key={item._id} className="group  md:w-75 w-75  md:mt-7 ">
     
           {/* IMAGE + REMOVE ICON */}
           <div className="relative bg-[#f5f5f5]">
             
             {/* cross icon */}
-            <button className="absolute top-3 right-3 z-20 cursor-pointer">
+            <button onClick={() => handleRemove(item.clothId._id)}
+ className="absolute top-3 right-3 z-20 cursor-pointer">
               <RxCross2 className='text-[18px]' />
             </button>
     
             <Link>
               <img
-                src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
+                src={ item.clothId?.uploadimages?.length > 0
+                      ? `${serverURL}/uploads/${item.clothId.uploadimages[0]}`:"https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"}
                 className="w-full md:h-105  object-cover"
                 alt="product img"
               />
@@ -54,79 +133,39 @@ function Cart() {
     
             {/* product name with ... */}
             <p className="uppercase truncate">
-              Monogram Tartan Denim Pants
+              {item.clothId?.clothname}
             </p>
     
             {/* size + color */}
-            <p className="text-gray-900 mt-1">
-              M | BLACK
+            <p className="text-gray-900 mt-1 uppercase">
+           {item.clothId?.size} | {item.clothId?.clothcolor}
+
             </p>
     
             {/* price */}
             <p className="mt-1">
-              ₹ 2,20,000.00
+              ₹ {item.clothId?.price}
             </p>
     
             {/* quantity buttons */}
             <div className="flex items-center gap-6 mt-3">
-              <button className="text-lg">−</button>
-              <span>1</span>
-              <button className="text-lg">+</button>
+              <button onClick={() => handleDecrease(item.clothId._id, item.quantity)} className="text-lg">−</button>
+              <span>{item.quantity}</span>
+              <button  onClick={() => handleIncrease(item.clothId._id)} className="text-lg">+</button>
             </div>
           </div>
 
 
       
     </div>
-    {/* repeat card */}
-<div className="group  md:w-75 w-75  md:mt-7 ">
-    
-          {/* IMAGE + REMOVE ICON */}
-          <div className="relative bg-[#f5f5f5]">
-            
-            {/* cross icon */}
-            <button className="absolute top-3 right-3 z-20 cursor-pointer">
-              <RxCross2 className='text-[18px]' />
-            </button>
-    
-            <Link>
-              <img
-                src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg"
-                className="w-full md:h-105  object-cover"
-                alt="product img"
-              />
-            </Link>
-          </div>
-    
-          {/* TEXT AREA */}
-          <div className="mt-3 text-[12px] tracking-wide">
-    
-            {/* product name with ... */}
-            <p className="uppercase truncate">
-              Monogram Tartan Denim Pants
-            </p>
-    
-            {/* size + color */}
-            <p className="text-gray-900 mt-1">
-              M | BLACK
-            </p>
-    
-            {/* price */}
-            <p className="mt-1">
-              ₹ 2,20,000.00
-            </p>
-    
-            {/* quantity buttons */}
-            <div className="flex items-center gap-6 mt-3">
-              <button className="text-lg">−</button>
-              <span>1</span>
-              <button className="text-lg">+</button>
-            </div>
-          </div>
+  ))
+  :
+            <p className="text-center text-sm tracking-widest mt-20">
+          YOUR CART IS EMPTY
+        </p>
 
+ }
 
-      
-    </div>
     </div>
 </div>
 {/* FIXED BOTTOM TOTAL BAR */}
@@ -144,7 +183,7 @@ function Cart() {
 
       <div className="flex items-center gap-6">
         <p className="text-[11px] tracking-wide uppercase">Total</p>
-        <p className="text-[14px]">₹ 34,140.00</p>
+        <p className="text-[14px]">₹ {totalPrice}</p>
       </div>
 
       <p className="text-[10px] text-gray-600 -mt-1">Including GST</p>

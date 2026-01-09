@@ -9,6 +9,8 @@ import Header from '../components/Header';
 import { Link } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
 import Footer from '@/component/Footer';
+import Magnet from '@/component/Magnet';
+import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 
 
 function Home() {
@@ -39,6 +41,36 @@ function Home() {
     video.muted = !muted;
     setMuted(!muted);
   };
+
+const testimonials = [
+  {
+    quote: "I’ve tried thrifting on Instagram and random websites, but Thrifter honestly feels different. Everything is well-organized, the pieces feel curated, and I actually enjoy scrolling instead of feeling overwhelmed. Found some amazing streetwear pieces at prices I couldn’t believe.",
+    name: "Aarav",
+    title: "Streetwear Buyer",
+  },
+  {
+    quote: "As someone who wanted to sell clothes without the headache of constant DMs, Thrifter was a relief. Uploading products was simple, the interface looks clean, and my items got visibility quickly. It feels like a proper marketplace, not just another resale page.",
+    name: "Meera",
+    title: "Verified Seller",
+  },
+  {
+    quote: "What I love most is the vibe. Thrifter doesn’t feel cheap or cluttered like many thrift platforms. It feels intentional and aesthetic. I’ve picked up vintage jackets and unique pieces that I’d never find in normal stores.",
+    name: "Rohan",
+    title: "Vintage Collector",
+  },
+  {
+    quote: "Shopping sustainably usually feels boring, but Thrifter somehow makes it exciting. Knowing that I’m reusing fashion while still staying on trend is a win. It’s become my go-to place whenever I’m looking for something unique.",
+    name: "Ananya",
+    title: "Eco-Conscious Shopper",
+  },
+  {
+    quote: "From browsing clothes to adding items to my wishlist, everything feels smooth and premium. It doesn’t feel like a student project at all. Thrifter genuinely feels like a platform I’d keep using long-term.",
+    name: "Karthik",
+    title: "Regular Buyer",
+  },
+];
+
+
   return (
 
    <div className=''>
@@ -223,7 +255,10 @@ function Home() {
   >
     <source src="/discovercloth.mp4" type="video/mp4" />
   </video>
-    <StarBorder
+   
+
+    <Magnet padding={100} disabled={false} magnetStrength={5}>
+       <StarBorder
       as="button"
       className="custom-class md:mt-15 mt-8 "
       color="red"
@@ -231,6 +266,8 @@ function Home() {
     >
      Discover the Selection
     </StarBorder>
+</Magnet>
+
   </Link>
   
      </div>
@@ -253,12 +290,41 @@ function Home() {
   
   
               </div>
-  <Logo/>
+    <Logo/>
+  
      </div>
   </div>
-  <div>
 
+
+       <div className='md:mt-20 mt-5'>
+        <div style={{ fontFamily: "Playfair Display, serif" }} className=' md:mb-20 mb-5 md:mt-1 mt-2 text-center '>
+                <div className='md:text-4xl text-base font-bold'>
+                  <ShinyText
+                    text="Loved by thousands of people
+"
+                    speed={3}
+                    className='custom-class'
+                  />
+                </div>
+                <div className=' italic md:text-2xl text-xs font-medium '>
+                  <ShinyText
+                    text="Here's what some of our users have to say about Thrifter"
+                    speed={3}
+                    className='custom-class'
+                  />
+                </div>
+  
+  
+              </div>
+    <div>
+<InfiniteMovingCards
+  items={testimonials}
+  direction="left"
+  speed="slow"
+/>
   </div>
+     </div>
+
         </div>
 
         <Footer/>
