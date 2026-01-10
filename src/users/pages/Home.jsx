@@ -308,7 +308,7 @@ const testimonials = [
                 </div>
                 <div className=' italic md:text-2xl text-xs font-medium '>
                   <ShinyText
-                    text="Here's what some of our users have to say about Thrifter"
+                    text="Here's what some of our users say about Thrifter"
                     speed={3}
                     className='custom-class'
                   />
