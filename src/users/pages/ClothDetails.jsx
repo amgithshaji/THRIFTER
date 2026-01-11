@@ -128,7 +128,7 @@ function ClothDetails() {
                 {/* card 1 */}
                 <div className='grid md:grid-cols-2 grid-cols-1 h-screen md:ms-55 ms-4 gap-30' >
                     <div>
-                        <img className=' me-30 md:mt-1 mt-25  md:h-210 h-130 md:w-143 w-89 object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[1]}` : "https://static.zara.net/assets/public/6ced/a7fb/ee4f4e068ddb/ba204696d866/03548264716-p/03548264716-p.jpg?ts=1766507794276&w=1024"} alt="no img" />
+                        <img className=' me-30 md:mt-1 mt-25  md:h-210 h-130 md:w-143 w-89 object-cover object-top relative ' src={images[1] ? `${serverURL}/uploads/${images[1]}` : ""} alt="no img" />
                     </div>
                     <div>
                         <div className=' md:mt-50  md:me-45 me-5'>

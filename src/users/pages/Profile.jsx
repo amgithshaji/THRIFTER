@@ -18,12 +18,23 @@ import { Upload } from "lucide-react"
 import { addClothAPI, addStoreAPI } from '@/services/allAPI'
 // import { toast } from 'react-toastify'
 import { ToastContainer, toast, Slide } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'
 
 
 
 
 function Profile() {
 
+  const navigate = useNavigate()
+
+ const handleLogout = () => {
+   sessionStorage.clear()
+   toast.success("Logged out successfully")
+   setTimeout(() => {
+     navigate('/login')
+   }, 3000)
+ }
+ 
   const [userName,setUserName] = useState("")
   // console.log(userName);
 
@@ -202,7 +213,7 @@ const handleUploadStore = async ()=>{
             <div className="w-full flex justify-center h-auto py-12 mt-20">
 
                 <img
-                    src="https://i.pinimg.com/736x/fc/b8/f7/fcb8f7c246d81ad733ecb907dd52a344.jpg" alt="img" className="w-[93%] h-100 object-cover object-top" />
+                    src="https://i.pinimg.com/1200x/49/60/13/49601389a0012cd7c2f20c20aa3bac65.jpg" alt="img" className="w-[93%] h-100 object-cover object-center" />
 
             </div>
                  <div style={{ fontFamily: "Playfair Display, serif" }} className='text-center mt-1 mb-8  text-[45px] font-semibold ' >
@@ -570,7 +581,7 @@ const handleUploadStore = async ()=>{
             {/* <h2 className="text-1xl font-semibold  mb-6 uppercase">My wishlist</h2> */}
             {/* <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p> */}
 
-            <button className="w-50 py-2 text-sm md:ms-116 ms-13  border border-black bg-black text-white hover:bg-white hover:text-black hover:opacity-80 transition">
+            <button onClick={handleLogout} className="w-50 py-2 text-sm md:ms-116 ms-13  border border-black bg-black text-white hover:bg-white hover:text-black hover:opacity-80 transition">
               Log Out
             </button>
           </div>

@@ -60,7 +60,7 @@ function App() {
           <Route path='/cart' element={<Cart/>} />
           <Route path='/wishlist' element={<Wishlist/>} />
            {/* <Route path='/admin/home' element={<AdminHome/>} /> */}
-           <Route path="/admin" element={<AdminLayout />}>
+           <Route path="/admin/home" element={<AdminLayout />}>
     <Route index element={<AdminHome />} />
   </Route>
   

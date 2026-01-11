@@ -16,11 +16,17 @@ const products = [
     image: "https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg?ts=1765983610422&w=1024",
     name: "Retro Shirt",
   },
-//   {
-//     id: "103",
-//     image: "https://images.unsplash.com/photo-1521334884684-d80222895322",
-//     name: "Streetwear Hoodie",
-//   },
+
+  {
+    _id: "6963eac1c549b70c35aa9c39",
+    image: "https://static.zara.net/assets/public/4c1c/1763/5da74ad287ec/13e9c3b7a225/06124350427-p/06124350427-p.jpg?ts=1763543224962&w=1024",
+    name: "Denim Shirt",
+  },
+    {
+    _id: "6963f5d4c549b70c35aa9cac",
+    image: "https://static.zara.net/assets/public/6416/04b7/1b454082be19/b399dd84970e/09632045802-p/09632045802-p.jpg?ts=1766498273107&w=1024",
+    name: "Denim Shirt",
+  },
 ];
 
 function ProductCarousel() {
@@ -41,7 +47,7 @@ function ProductCarousel() {
       <img
         src={item.image}
         alt={item.name}
-        className="me-6  md:h-150 h-80 md:w-160 w-89 object-cover  relative "
+        className="me-6  md:h-150 h-80 md:w-160 w-89 object-cover object-top relative "
       />
     <Link to={`/cloth/${item?._id}/details`} className="block h-full w-full">
       <button

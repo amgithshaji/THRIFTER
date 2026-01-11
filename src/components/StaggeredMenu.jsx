@@ -69,7 +69,7 @@ const handleLogout = () => {
   closeMenu()
   setTimeout(() => {
     navigate('/login')
-  }, 1500)
+  }, 3000)
 }
 
 
