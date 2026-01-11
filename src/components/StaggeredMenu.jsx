@@ -62,6 +62,17 @@ export const StaggeredMenu = ({
   const {cartItems} = useContext(cartContext)
 
 const navigate = useNavigate()
+
+const handleLogout = () => {
+  sessionStorage.clear()
+  toast.success("Logged out successfully")
+  closeMenu()
+  setTimeout(() => {
+    navigate('/login')
+  }, 1500)
+}
+
+
   
   useEffect(()=>{
     if(sessionStorage.getItem("token")){
@@ -89,6 +100,8 @@ const handleSearch = ()=>{
   }
   
 }
+
+
 
 // search on mobile
 
@@ -441,18 +454,22 @@ const handleSearchMobile = ()=>{
 <div className="absolute md:me-24 top-0 right-0 z-50 flex items-center gap-4 md:gap-6 px-4 py-1 md:mt-12 mt-2 pointer-events-auto">
   
   {/* Search (Desktop) */}
-  <div className="hidden sm:flex flex-col items-end">
-<Link  >
-      <input onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="SEARCH" className="bg-transparent outline-none text-[11px] tracking-[0.2em] uppercase placeholder-black pr-2"/>
-</Link>
-    <div className="h-px w-34 bg-black">    <IoIosSearch onClick={handleSearch} className='ms-29' style={{"marginTop":"-19px"}} />
-</div>
+{
+  !insideclothsearch &&  <div>
+    <div className="hidden sm:flex flex-col items-end">
+  <Link  >
+        <input onChange={e=>setSearchkey(e.target.value)} type="text" placeholder="SEARCH" className="bg-transparent outline-none text-[11px] tracking-[0.2em] uppercase placeholder-black pr-2"/>
+  </Link>
+      <div className="h-px w-34 bg-black">    <IoIosSearch onClick={handleSearch} className='ms-29' style={{"marginTop":"-19px"}} />
   </div>
-
-  {/* Search (Mobile Icon) */}
-  <button onClick={handleSearchMobile}  className="sm:hidden text-xl">
-    <IoIosSearch />
-  </button>
+    </div>
+  
+    {/* Search (Mobile Icon) */}
+    <button onClick={handleSearchMobile}  className="sm:hidden text-xl">
+      <IoIosSearch />
+    </button>
+ </div>
+}
 
   {/* Login */}
   {
@@ -547,28 +564,48 @@ const handleSearchMobile = ()=>{
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
         <div className="sm-panel-inner">
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
-            {items && items.length ? (
-              items.map((it, idx) => (
-             <li className="sm-panel-itemWrap" key={it.label + idx}>
-  <Link
-    className="sm-panel-item"
-    to={it.link}
-    aria-label={it.ariaLabel}
-    data-index={idx + 1}
-    onClick={closeMenu}
-  >
-    <span className="sm-panel-itemLabel">{it.label}</span>
-  </Link>
-</li>
+{items && items.length ? (
+  items
+    .filter(it => {
+      // hide logout if NOT logged in
+      if (it.action === 'logout' && !sessionStorage.getItem("token")) {
+        return false
+      }
+      return true
+    })
+    .map((it, idx) => (
+      <li className="sm-panel-itemWrap" key={it.label + idx}>
+        {it.action === 'logout' ? (
+          <button
+            className="sm-panel-item w-full text-left"
+            aria-label={it.ariaLabel}
+            data-index={idx + 1}
+            onClick={handleLogout}
+          >
+            <span className="sm-panel-itemLabel">{it.label}</span>
+          </button>
+        ) : (
+          <Link
+            className="sm-panel-item"
+            to={it.link}
+            aria-label={it.ariaLabel}
+            data-index={idx + 1}
+            onClick={closeMenu}
+          >
+            <span className="sm-panel-itemLabel">{it.label}</span>
+          </Link>
+        )}
+      </li>
+    ))
+) : (
+  <li className="sm-panel-itemWrap" aria-hidden="true">
+    <span className="sm-panel-item">
+      <span className="sm-panel-itemLabel">No items</span>
+    </span>
+  </li>
+)}
 
-              ))
-            ) : (
-              <li className="sm-panel-itemWrap" aria-hidden="true">
-                <span className="sm-panel-item">
-                  <span className="sm-panel-itemLabel">No items</span>
-                </span>
-              </li>
-            )}
+
           </ul>
           {displaySocials && socialItems && socialItems.length > 0 && (
             <div className="sm-socials" aria-label="Social links">

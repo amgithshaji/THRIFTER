@@ -58,7 +58,7 @@ if (result.status==200){
   return (
     
    <>
-           <Header/>
+           <Header insideclothsearch={true} />
 
       {
         token?

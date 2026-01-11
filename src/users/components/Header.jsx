@@ -1,14 +1,14 @@
 import React from 'react'
 import StaggeredMenu from '@/components/StaggeredMenu'
 import Profile from '../pages/Profile';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
  const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
     { label: 'Profile', ariaLabel: 'View our services', link: '/profile' },
-    { label: 'logout', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'logout', ariaLabel: 'logout user', action: 'logout'}
   ];
 
   const socialItems = [
@@ -16,11 +16,17 @@ import { Link } from 'react-router-dom';
     { label: 'GitHub', link: 'https://github.com' },
     { label: 'LinkedIn', link: 'https://linkedin.com' }
   ];
-function Header() {
+function Header({ insideclothsearch = false }) {
+
+ 
+
+
+
   return (
     <div>
       
             <StaggeredMenu
+               insideclothsearch={insideclothsearch}
               position="fixed"
               items={menuItems}
               socialItems={socialItems}
