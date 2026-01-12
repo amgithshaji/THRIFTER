@@ -93,3 +93,7 @@ export const decreaseCartAPI = async(reqHeader,clothId)=>{
 return await commonAPI("PUT",`${serverURL}/cart/decrease/${clothId}`,{},reqHeader)
 
 }
+// edit user profile
+export const editUserAPI = async (id,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${serverURL}/user/${id}/edit`,reqBody,reqHeader)
+}

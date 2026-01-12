@@ -15,6 +15,7 @@ import Wishlist from './users/pages/Wishlist'
 import AdminHome from './admin/pages/AdminHome'
 import Chatbot from './component/Chatbot/Chatbot'
 import AdminLayout from './admin/components/AdminLayout'
+import BookStatus from './component/BookStatus'
 
 
 
@@ -59,6 +60,8 @@ function App() {
           <Route path='/register' element={<Auth insideRegister ={true} />} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/wishlist' element={<Wishlist/>} />
+          <Route path='/bookstatus' element={<BookStatus/>} />
+
            {/* <Route path='/admin/home' element={<AdminHome/>} /> */}
            <Route path="/admin/home" element={<AdminLayout />}>
     <Route index element={<AdminHome />} />

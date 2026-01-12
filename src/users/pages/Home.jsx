@@ -152,7 +152,7 @@ const testimonials = [
           </div>
   
           <div>
-            <div className='md:ms-20 ms-4 relative group'>
+            <div className='md:ms-20 md:me-1 me-1 relative group'>
               {/* <img className=' me-6  md:h-150 h-80 md:w-160 w-89 object-cover object-top relative ' src="https://static.zara.net/assets/public/63fd/6d79/8d8e46339eb5/ab97b76b2478/00858613250-p/00858613250-p.jpg?ts=1765983610422&w=1024" alt="no img" />
             <Link to={'clothdetails'}>  <button style={{ fontFamily: "Playfair Display, serif" }} className=' md:text-sm text-xs absolute md:left-124 left-57  md:top-139 top-71 -translate-x-1/9 -translate-y-1/9 border border-black text-black cursor-pointer px-6 py-1 md:hover:border-yellow-50 hover:border-yellow-50 md:hover:text-yellow-50 hover:text-yellow-50  active:border-white active:text-white   transition-all duration-300 ease-out' >View product</button></Link> */}
             <ProductCarousel/>

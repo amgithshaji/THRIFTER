@@ -85,8 +85,8 @@ const handleAddToCartFromWishlist = async (clothId) => {
 </div>
 
 {/* repeat card */}
-<div className="md:px-12 px-3 py-10">
-  <div className="grid md:grid-cols-4 md:gap-5 md:ms-9 ms-8">
+<div className="md:px-12 px-3 py-10 ">
+  <div className="grid md:grid-cols-4 md:gap-5 md:ms-9 ms-8 ">
 
     {
       wishlist.length > 0 ? wishlist.map(item => (
@@ -124,7 +124,7 @@ const handleAddToCartFromWishlist = async (clothId) => {
             <p className="mt-1">₹ {item.clothId?.price}</p>
           </div>
 
-          <button onClick={() => handleAddToCartFromWishlist(item.clothId._id)} className="mt-2 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
+          <button onClick={() => handleAddToCartFromWishlist(item.clothId._id)} className="mt-2 mb-4 px-15 py-2 bg-white text-black text-[12px] hover:bg-black hover:text-white border border-black uppercase tracking-wide">
             add
           </button>
 

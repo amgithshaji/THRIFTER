@@ -183,8 +183,8 @@ function ClothDetails() {
                                     <p>Product size available</p>
                                     <p className='font-semibold text-[13px]  ' >{cloth?.size}</p>
                                     <p>Exchange,return available</p>
-                                    <Link to={`/seller/${cloth?.sellermail}/details`}>
-                                        <p className='uppercase cursor-pointer' >seller details</p>
+                                    <Link to={`/seller/${cloth?.sellermail}/details`} className="relative z-50" >
+                                        <p className='uppercase cursor-pointer ' >seller details</p>
                                     </Link>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@ function ClothDetails() {
                     </div>
                 </div>
                 {/* grid 2 */}
-                <div className='grid md:grid-cols-2 grid-cols-1   md:ms-7 ms-4 md:gap-30 gap-1' >
+                <div className='grid md:grid-cols-2 grid-cols-1 mt-5  md:ms-7 ms-4 md:gap-30 gap-1' >
                     <div className=' md:mt-50 mt-100  md:me-45 me-5'>
                         <div className="md:ms-25 text-[11px] tracking-widest  md:mt-180 mt-10">
                             <p className='uppercase' >Outershell</p>

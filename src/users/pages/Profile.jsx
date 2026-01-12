@@ -15,15 +15,36 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
-import { addClothAPI, addStoreAPI } from '@/services/allAPI'
+import { addClothAPI, addStoreAPI, editUserAPI } from '@/services/allAPI'
 // import { toast } from 'react-toastify'
 import { ToastContainer, toast, Slide } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
 
 function Profile() {
+  
+  const [userDetails,setUserDetails] = useState({
+    id:"",username:"",password:""
+  })
+  console.log(userDetails);
+  
+  const[confirmPassword,setConfirmPassword] = useState("")
+  const [passwordMatch,setPasswordMatch]=useState(true)
+
+ useEffect(()=>{
+    if (sessionStorage.getItem("user")) {
+      const user = JSON.parse(sessionStorage.getItem("user"))
+      setUserDetails({...userDetails,id:user._id,username:user.username})
+      
+    }
+  },[])
+
+  const checkPasswordmatch = (data)=>{
+setConfirmPassword(data)
+userDetails.password == data ? setPasswordMatch(true):setPasswordMatch(false)
+  }
 
   const navigate = useNavigate()
 
@@ -206,6 +227,33 @@ const handleUploadStore = async ()=>{
 
 }
 
+const handleProfileUpdate = async()=>{
+  const {username,password,id} = userDetails
+  if (!username || !password || !confirmPassword) {
+    toast.info("please fill the form completely")
+    
+  }else{
+    const token = sessionStorage.getItem("token")
+    if (token) {
+        const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+      const reqBody = {username,password}
+      const result = await editUserAPI(id,reqBody,reqHeader)
+      if (result.status==200) {
+        toast.success("Profile updated. Please log in again")
+        setTimeout(()=>{
+          navigate('/login')
+        },2000);
+        
+      }else{
+        console.log(result);
+        toast.error("something went wrong")
+      }
+    }
+  }
+}
+
   return (
     <div>
         <Header/>
@@ -259,22 +307,25 @@ const handleUploadStore = async ()=>{
         <div className="mt-6 space-y-5 p-5">
           <div className="space-y-2">
             <Label>Username</Label>
-            <Input placeholder="Enter username" />
+            <Input value={userDetails.username} onChange={e=>setUserDetails({...userDetails,username:e.target.value})} placeholder="Enter username" />
           </div>
 
           <div className="space-y-2">
             <Label>Password</Label>
-            <Input type="password" placeholder="Enter new password" />
+            <Input value={userDetails.password} onChange={e=>setUserDetails({...userDetails,password:e.target.value})} type="password" placeholder="Enter new password" />
           </div>
 
           <div className="space-y-2">
             <Label>Confirm password</Label>
-            <Input type="password" placeholder="Confirm password" />
+            <Input value={confirmPassword} onChange={e=>checkPasswordmatch(e.target.value)} type="password" placeholder="Confirm password" />
           </div>
+              {!passwordMatch && <div className=" mb-3 w-full px-5 font-bold text-red-600 text-xs">
+                  *confirm password must match with new password
+            </div> }
         </div>
 
         <div className="mt-8 p-5">
-          <Button type="submit" className="w-full border border-black hover:bg-white hover:text-black">Save changes</Button>
+          <Button onClick={handleProfileUpdate} type="submit" className="w-full border border-black hover:bg-white hover:text-black"disabled= {!passwordMatch?true:false}>Save changes</Button>
 
           <SheetClose asChild>
             <Button variant="outline" className="w-full mt-2 border-black">
@@ -563,9 +614,11 @@ const handleUploadStore = async ()=>{
             <h2 className="text-1xl font-semibold  mb-6 uppercase">cloth status</h2>
             {/* <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p> */}
 
-            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
-              Check Status
-            </button>
+           <Link to={'/bookstatus'}>
+              <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
+                Check Status
+              </button>
+           </Link>
           </div>
              {/* my order */}
            <div className="bg-white border  p-8  transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ">
