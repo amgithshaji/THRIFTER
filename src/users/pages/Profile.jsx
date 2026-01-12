@@ -614,7 +614,7 @@ const handleProfileUpdate = async()=>{
             <h2 className="text-1xl font-semibold  mb-6 uppercase">cloth status</h2>
             {/* <p className="mb-9 text-[13px]">Login: amgithshaji410@gmail.com</p> */}
 
-           <Link to={'/bookstatus'}>
+           <Link to={'/clothStatus'}>
               <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
                 Check Status
               </button>
@@ -625,9 +625,11 @@ const handleProfileUpdate = async()=>{
             <h2 className="text-1xl font-semibold  mb-6 uppercase">My order</h2>
             <p className="mb-9 text-[13px]">Login: <span className='font-medium' >{userEmail}</span></p>
 
-            <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
-              Start Shopping
-            </button>
+         <Link to={'/myorder'}>
+              <button className="w-full py-2 text-sm  border border-black bg-white text-black hover:bg-black hover:text-white  transition">
+                My Order
+              </button>
+         </Link>
           </div>
           {/* my wishlist */}
             <div className="bg-white   p-8  transition-all ">

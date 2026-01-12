@@ -97,3 +97,12 @@ return await commonAPI("PUT",`${serverURL}/cart/decrease/${clothId}`,{},reqHeade
 export const editUserAPI = async (id,reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${serverURL}/user/${id}/edit`,reqBody,reqHeader)
 }
+// get user cloth
+export const getAllUserClothAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/user-cloth/all`,{},reqHeader)
+}
+
+// remove cloth 
+export const removeClothAPI = async (id,reqHeader)=>{
+    return await commonAPI("DELETE",`${serverURL}/cloth/${id}`,{},reqHeader)
+}
