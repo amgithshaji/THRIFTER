@@ -193,7 +193,7 @@ const handleDecrease = async (clothId, quantity) => {
 
     </div>
        <button className="mt-2 px-10 py-3 bg-black text-white text-[12px] hover:bg-white hover:text-black border border-black uppercase tracking-wide">
-        Continue
+        Continu
       </button>
   </div>
 </div>
