@@ -37,10 +37,16 @@ const handleRemove = async (clothId) => {
     console.log(err)
   }
 }
-const totalPrice = cartItems.reduce(
-  (sum, item) => sum + item.clothId.price * item.quantity,
-  0
-)
+// const totalPrice = cartItems.reduce(
+//   (sum, item) => sum + item.clothId.price * item.quantity,
+//   0
+// )
+
+const totalPrice = cartItems.reduce((sum, item) => {
+  if (!item?.clothId?.price) return sum
+  return sum + item.clothId.price * item.quantity
+}, 0)
+
 
 // increase quantity (+)
 const handleIncrease = async (clothId) => {
@@ -193,7 +199,7 @@ const handleDecrease = async (clothId, quantity) => {
 
     </div>
        <button className="mt-2 px-10 py-3 bg-black text-white text-[12px] hover:bg-white hover:text-black border border-black uppercase tracking-wide">
-        Continu
+        Continue
       </button>
   </div>
 </div>

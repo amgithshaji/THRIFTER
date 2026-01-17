@@ -15,13 +15,20 @@ import { addToCartAPI } from '@/services/allAPI';
 function Wishlist() {
   const { fetchCart } = useContext(cartContext)
 
-  const { wishlist, removeFromWishlist } = useContext(wishlistContext)
+
+  const { wishlist, removeFromWishlist, fetchWishlist } = useContext(wishlistContext)
+
     useEffect(() => {
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   })
 }, [])  
+
+useEffect(() => {
+  fetchWishlist()
+}, [])
+
 
 const [userName,setUserName] = useState("")
 useEffect(()=>{

@@ -71,7 +71,7 @@ function WishlistContextProvider({ children }) {
   }, [])
 
   return (
-    <wishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist }}>
+    <wishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist,fetchWishlist    }}>
       {children}
     </wishlistContext.Provider>
   )
