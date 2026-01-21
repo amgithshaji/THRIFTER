@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -39,58 +40,61 @@ function AdminSideBar() {
   const links = [
     {
       label: "Dashboard",
-      href: "/admin",
-      icon: <IconBrandTabler className="h-5 w-5" />,
+      href: "/admin/home",
+      icon: <IconBrandTabler className="h-5 w-5 text-white" />,
     },
     {
       label: "Resources",
       href: "/admin/resources",
-      icon: <IconBook className="h-5 w-5" />,
+      icon: <IconBook className="h-5 w-5 text-white" />,
     },
     {
       label: "Settings",
-      href: "/admin/settings",
-      icon: <IconSettings className="h-5 w-5" />,
+      href: "/admin/profile",
+      icon: <IconSettings className="h-5 w-5 text-white" />,
     },
     {
       label: "Logout",
       href: "/logout",
-      icon: <IconArrowLeft className="h-5 w-5" />,
+      icon: <IconArrowLeft className="h-5 w-5 text-white" />,
     },
   ];
+  
 
-  return (
-    <Sidebar open={open} setOpen={setOpen}>
-      <SidebarBody className="justify-between gap-10 rounded-3xl">
-        <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          {/* 👇 USING LOGO HERE */}
-          {open ? <Logo /> : <LogoIcon />}
+  // Inside AdminSideBar.jsx
 
-          <div className="mt-8 flex flex-col gap-2">
-            {links.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
-            ))}
-          </div>
+return (
+  <Sidebar open={open} setOpen={setOpen}>
+    {/* Use !bg-black or !bg-neutral-950 to force the color override */}
+    <SidebarBody className="justify-between gap-10 bg-neutral-950 dark:bg-neutral-950 border-none shadow-none">
+      <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        {open ? <Logo /> : <LogoIcon />}
+
+        <div className="mt-8 flex flex-col gap-2">
+          {links.map((link, idx) => (
+            <SidebarLink key={idx} link={link} />
+          ))}
         </div>
-
-        <div>
-          <SidebarLink
-            link={{
-              label: "Admin",
-              href: "/admin",
-              icon: (
-                <img
-                  src="https://assets.aceternity.com/manu.png"
-                  className="h-7 w-7 rounded-full"
-                  alt="Admin avatar"
-                />
-              ),
-            }}
-          />
-        </div>
-      </SidebarBody>
-    </Sidebar>
-  );
+      </div>
+      
+      <div>
+        <SidebarLink
+          link={{
+            label: "Admin",
+            href: "/admin",
+            icon: (
+              <img
+                src="https://assets.aceternity.com/manu.png"
+                className="h-7 w-7 rounded-full"
+                alt="Avatar"
+              />
+            ),
+          }}
+        />
+      </div>
+    </SidebarBody>
+  </Sidebar>
+);
 }
 
 export default AdminSideBar;

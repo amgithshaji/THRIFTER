@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 
 import './App.css'
 
@@ -17,6 +17,8 @@ import Chatbot from './component/Chatbot/Chatbot'
 import AdminLayout from './admin/components/AdminLayout'
 import ClothStatus from './component/ClothStatus'
 import MyOrder from './component/MyOrder'
+import AdminProfile from './admin/pages/AdminProfile'
+import AdminResources from './admin/pages/AdminResources'
 
 
 
@@ -32,6 +34,10 @@ function App() {
 
     return () => clearTimeout(timer)
   }, [])
+
+  const location = useLocation()
+
+  const isAdminPage = location.pathname.startsWith('/admin')
 
   return (
   <>
@@ -65,14 +71,22 @@ function App() {
           <Route path='/myorder' element={<MyOrder/>} />
 
            {/* <Route path='/admin/home' element={<AdminHome/>} /> */}
-           <Route path="/admin/home" element={<AdminLayout />}>
-    <Route index element={<AdminHome />} />
-  </Route>
-  
+           {/* <Route path='/admin/resources' element={<AdminResources/>} /> */}
+           {/* <Route path='/admin/profile' element={<AdminProfile/>} /> */}
+           <Route path="/admin/home" element={<AdminLayout  />}>
+           <Route index element={<AdminHome />} />
+           </Route>
+           <Route path="/admin/resources" element={<AdminLayout />}>
+           <Route index element={<AdminResources />} />
+          </Route>
+            <Route path="/admin/profile" element={<AdminLayout />}>
+           <Route index element={<AdminProfile/>} />
+          </Route>
   
   
       </Routes>
-      {!loader && <Chatbot />}
+      {!loader && !isAdminPage && <Chatbot />}
+
 
   </>
   )

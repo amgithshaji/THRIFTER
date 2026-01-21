@@ -1,9 +1,44 @@
 import Header from '@/users/components/Header'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from './Footer'
 import { Link } from 'react-router-dom'
+import { getMyOrderClothAPI } from '@/services/allAPI'
 
 function MyOrder() {
+const [myOrder,setMyOrder] = useState([])
+console.log(myOrder);
+
+useEffect(()=>{
+getMyOrderCloth()
+},[])
+
+    useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])
+
+const getMyOrderCloth = async ()=>{
+  const token = sessionStorage.getItem("token")
+  if (token) {
+    const reqHeader ={
+      "Authorization" : `Bearer ${token}`
+    }
+    const result = await getMyOrderClothAPI(reqHeader)
+    if (result.status==200) {
+      setMyOrder(result.data)
+      
+    }else{
+    console.log(result);
+
+    }
+    
+    
+  }
+}
+
+
   return (
     <>
     <Header/>
@@ -18,12 +53,15 @@ function MyOrder() {
   <div className="space-y-10">
 
     {/* Order Row */}
-    <div className="border border-black py-6 flex flex-col md:flex-row gap-6">
+   {
+    myOrder?.length>0?
+    myOrder?.map(cloth=>(
+       <div key={cloth?._id} className="border border-black py-6 flex flex-col md:flex-row gap-6">
 
       {/* Image */}
       <div className="w-full md:w-56 h-72 bg-gray-50 flex items-center justify-center">
         <img
-          src="https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg"
+          src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"}
           alt="Product"
           className="h-full object-contain"
         />
@@ -35,7 +73,7 @@ function MyOrder() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm uppercase tracking-widest">
-              Vintage Denim Jacket
+              {cloth?.clothname}
             </p>
             <span className="text-xs uppercase tracking-widest me-3">
               Delivered
@@ -43,13 +81,13 @@ function MyOrder() {
           </div>
 
           <p className="text-lg font-light uppercase">
-            ₹ 1,499
+            ₹ {cloth?.price}
           </p>
 
           <div className="mt-4 space-y-2 text-xs tracking-widest uppercase text-gray-600">
-            <p>Blue · Size M</p>
-            <p>Cloth ID: THRFT-09231</p>
-            <p>Ordered on: 12 Jan 2026</p>
+            <p>{cloth?.clothcolor} · Size {cloth?.size}</p>
+            <p>Cloth ID: {cloth?.productid}</p>
+            {/* <p>Ordered on: 12 Jan 2026</p> */}
           </div>
         </div>
 
@@ -65,9 +103,12 @@ function MyOrder() {
 
       </div>
     </div>
+    ))
+    :
+    <>
+        {/* Empty State */}
 
-    {/* Empty State */}
-    <div className="flex flex-col items-center justify-center py-28 border-t border-b border-black">
+ <div className="flex flex-col items-center justify-center py-28 border-t border-b border-black">
       <p className="text-sm tracking-widest uppercase mb-2">
         No purchases yet
       </p>
@@ -82,6 +123,10 @@ function MyOrder() {
           </button>
     </Link>
     </div>
+    </>
+   }
+
+   
 
   </div>
 </div>

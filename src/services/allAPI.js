@@ -106,3 +106,8 @@ export const getAllUserClothAPI = async (reqHeader)=>{
 export const removeClothAPI = async (id,reqHeader)=>{
     return await commonAPI("DELETE",`${serverURL}/cloth/${id}`,{},reqHeader)
 }
+
+// get my order clothes
+export const getMyOrderClothAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/my-order/cloth'`,{},reqHeader)
+}

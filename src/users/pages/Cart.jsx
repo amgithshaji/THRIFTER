@@ -86,7 +86,7 @@ const handleDecrease = async (clothId, quantity) => {
 }
 
   return (
-    <div  style={{ fontFamily: 'Raleway, sans-serif' }} className='md:h-470 h-670' >
+    <div  style={{ fontFamily: 'Raleway, sans-serif' }} className='md:h-470 h-530 ' >
                 <Header/>
 <div className="w-full bg-white ">
   {/* Category buttons */}
@@ -175,9 +175,9 @@ const handleDecrease = async (clothId, quantity) => {
     </div>
 </div>
 {/* FIXED BOTTOM TOTAL BAR */}
-<div className="fixed bottom-0 left-0 w-full md:h-27 bg-white border-t border-gray-200 z-50">
+<div className="fixed bottom-0 left-0 w-full md:h-27 bg-white border-t border-gray-200 z-50 ">
 
-  <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row md:items-center justify-end  gap-4">
+  <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row md:items-center justify-end  gap-4 ">
 
     {/* terms text */}
     {/* <p className="text-[10px] md:text-[11px] leading-relaxed text-gray-700 max-w-3xl">
