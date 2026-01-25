@@ -16,7 +16,7 @@ import { jwtDecode } from 'jwt-decode';
 
 
 
-function Auth() {
+function Auth({insideRegister}) {
 
   const [viewPassword, setViewPassword] = useState(false)
   const navigate = useNavigate()

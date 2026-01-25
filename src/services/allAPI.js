@@ -111,3 +111,23 @@ export const removeClothAPI = async (id,reqHeader)=>{
 export const getMyOrderClothAPI = async (reqHeader)=>{
     return await commonAPI("GET",`${serverURL}/my-order/cloth'`,{},reqHeader)
 }
+
+// get cloth: admin getcloth
+export const getAllAdminClothAPI = async(reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/admin-clothes/all`,{},reqHeader)
+}
+
+//  admin updating the cloth status
+export const updateClothStatusAPI = async (id,reqHeader)=>{
+    return await commonAPI("PUT",`${serverURL}/cloths/${id}/update`,{},reqHeader)
+}
+
+// get cloth: admin get store
+export const getAllAdminStoreAPI = async(reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/admin-stores/all`,{},reqHeader)
+}
+
+// get user: admin get user
+export const getAllAdminUsersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-user/all`,{},reqHeader)
+}

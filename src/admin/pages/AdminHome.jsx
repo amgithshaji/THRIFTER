@@ -8,8 +8,22 @@ import {
   IconBuildingStore, // Most common export for store/shop
   IconChevronRight 
 } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+
 
 function AdminHome() {
+
+   const handleLogout = () => {
+     sessionStorage.clear()
+     toast.success("Logged out successfully")
+     setTimeout(() => {
+       navigate('/login')
+     }, 3000)
+   }
+
+   const navigate = useNavigate()
+
   const stats = [
     { label: "Total Revenue", value: "₹2,45,600", growth: "+12.5%", icon: <IconCurrencyRupee size={20}/> },
     { label: "Active Listings", value: "842", growth: "+18", icon: <IconPackage size={20}/> },
@@ -25,8 +39,8 @@ function AdminHome() {
           <h1 className="text-3xl font-bold tracking-tight text-white">Thrifter Command Center</h1>
           <p className="text-gray-400 mt-1">Real-time overview of your marketplace.</p>
         </div>
-        <button className="bg-white text-black px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-200 transition">
-          Export Report
+        <button onClick={handleLogout} className="bg-white text-black px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-200 transition">
+          Log out
         </button>
       </div>
 
@@ -142,6 +156,14 @@ function AdminHome() {
           ))}
         </div>
       </div>
+           {/* toast container */}
+      <ToastContainer
+      style={{ zIndex: 9999999 }} 
+        position="bottom-right"
+        autoClose={2000}
+        transition={Slide}
+        theme="dark"
+      />
     </div>
   );
 }

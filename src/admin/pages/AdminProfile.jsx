@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   IconUser, 
   IconLock, 
@@ -9,8 +9,70 @@ import {
   IconFingerprint,
   IconCpu
 } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
+import { editUserAPI } from '@/services/allAPI';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+
+
 
 function AdminProfile() {
+  
+  
+   const [userDetails,setUserDetails] = useState({
+      id:"",username:"",password:""
+    })
+    console.log(userDetails);
+    
+    const[confirmPassword,setConfirmPassword] = useState("")
+    const [passwordMatch,setPasswordMatch]=useState(true)
+      const navigate = useNavigate()
+
+       useEffect(()=>{
+          if (sessionStorage.getItem("user")) {
+            const user = JSON.parse(sessionStorage.getItem("user"))
+            setUserDetails({...userDetails,id:user._id,username:user.username})
+            
+          }
+        },[])
+      
+        const checkPasswordmatch = (data)=>{
+      setConfirmPassword(data)
+      userDetails.password == data ? setPasswordMatch(true):setPasswordMatch(false)
+        }
+      
+const handleProfileUpdate = async()=>{
+  const {username,password,id} = userDetails
+  if (!username || !password || !confirmPassword) {
+    toast.info("please fill the form completely")
+    
+  }else{
+    const token = sessionStorage.getItem("token")
+    if (token) {
+        const reqHeader = {
+        "Authorization" : `Bearer ${token}`
+      }
+      const reqBody = {username,password}
+      const result = await editUserAPI(id,reqBody,reqHeader)
+      if (result.status==200) {
+        toast.success("Profile updated. Please log in again")
+        setTimeout(()=>{
+          navigate('/login')
+        },2000);
+        
+      }else{
+        console.log(result);
+        toast.error("something went wrong")
+      }
+    }
+  }
+}
+
+ const reset = ()=>{
+      const user = JSON.parse(sessionStorage.getItem("user"))
+      setUserDetails({...userDetails,id:user._id,username:user.username,role:user.role,bio:user.bio,password:""})
+      setConfirmPassword("")
+      setPasswordMatch(true)
+  }
   return (
     <div className="p-6 md:p-12 text-white max-w-6xl mx-auto animate-in fade-in duration-700">
       
@@ -37,7 +99,7 @@ function AdminProfile() {
               <div className="relative group w-fit mx-auto lg:mx-0">
                 <div className="h-40 w-40 rounded-[3rem] overflow-hidden border-4 border-neutral-800 shadow-2xl transition-all group-hover:border-neutral-700">
                   <img 
-                    src="https://assets.aceternity.com/manu.png" 
+                    src="/logoadmin.png" 
                     className="h-full w-full object-cover  transition-transform duration-700"
                     alt="Admin"
                   />
@@ -50,7 +112,7 @@ function AdminProfile() {
               {/* Admin Bio / Info */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-2xl font-black tracking-tight uppercase">Alex Thompson</h3>
+                  <h3 className="text-2xl font-black tracking-tight uppercase">amgith shaji</h3>
                   <p className="text-blue-500 text-xs font-black uppercase tracking-widest mt-1">Chief Operations Officer</p>
                 </div>
 
@@ -89,6 +151,7 @@ function AdminProfile() {
                 <div className="relative group">
                   <IconUser className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-700 group-focus-within:text-white transition-colors" size={20} />
                   <input 
+                  value={userDetails.username} onChange={e=>setUserDetails({...userDetails,username:e.target.value})}
                     type="text" 
                     placeholder="USERNAME"
                     className="w-full bg-neutral-900/50 border border-neutral-800 rounded-3xl py-5 pl-14 pr-6 text-sm font-bold focus:outline-none focus:ring-1 focus:ring-white/20 transition-all placeholder:text-neutral-800 uppercase tracking-widest"
@@ -103,6 +166,7 @@ function AdminProfile() {
                   <div className="relative group">
                     <IconLock className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-700 group-focus-within:text-white transition-colors" size={20} />
                     <input 
+                     value={userDetails.password} onChange={e=>setUserDetails({...userDetails,password:e.target.value})}
                       type="password" 
                       placeholder="••••••••••••"
                       className="w-full bg-neutral-900/50 border border-neutral-800 rounded-3xl py-5 pl-14 pr-6 text-sm focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-mono"
@@ -115,27 +179,39 @@ function AdminProfile() {
                   <div className="relative group">
                     <IconLock className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-700 group-focus-within:text-white transition-colors" size={20} />
                     <input 
+                    value={confirmPassword} onChange={e=>checkPasswordmatch(e.target.value)}
                       type="password" 
                       placeholder="••••••••••••"
                       className="w-full bg-neutral-900/50 border border-neutral-800 rounded-3xl py-5 pl-14 pr-6 text-sm focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-mono"
                     />
                   </div>
+                   {!passwordMatch && <div className=" mb-3  px-5 font-bold text-red-600 text-xs">
+                  *confirm password must match with new password
+            </div> }
                 </div>
               </div>
             </div>
 
             {/* Buttons */}
             <div className="pt-8 flex flex-col sm:flex-row gap-4">
-              <button className="flex-1 bg-white text-black py-5 rounded-3xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-neutral-200 transition-all active:scale-[0.98] shadow-xl">
+              <button onClick={handleProfileUpdate} type="submit"  className="flex-1 bg-white text-black py-5 rounded-3xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-neutral-200 transition-all active:scale-[0.98] shadow-xl  "  disabled= {!passwordMatch?true:false}>
                 <IconCheck size={18} stroke={3} /> Save Profile
               </button>
-              <button className="flex-1 bg-neutral-900 border border-neutral-800 text-neutral-400 py-5 rounded-3xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-neutral-800 hover:text-white transition-all active:scale-[0.98]">
+              <button onClick={reset} className="flex-1 bg-neutral-900 border border-neutral-800 text-neutral-400 py-5 rounded-3xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-neutral-800 hover:text-white transition-all active:scale-[0.98]">
                 <IconX size={18} stroke={3} /> Discard
               </button>
             </div>
           </div>
         </div>
       </div>
+            {/* toast container */}
+            <ToastContainer
+            style={{ zIndex: 9999999 }} 
+              position="bottom-right"
+              autoClose={2000}
+              transition={Slide}
+              theme="dark"
+            />
     </div>
   );
 }

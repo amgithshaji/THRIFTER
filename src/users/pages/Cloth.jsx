@@ -122,7 +122,7 @@ if (result.status==200){
     {
       filteredClothes?.length>0?
       filteredClothes?.map(cloth=>(
-         <div key={cloth?._id} className="group">
+         <div key={cloth?._id} className="group" hidden={cloth?.status!='approved'}>
         <div  className="relative bg-[#f5f5f5]">
    
 

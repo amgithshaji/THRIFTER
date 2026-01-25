@@ -53,11 +53,11 @@ function AdminSideBar() {
       href: "/admin/profile",
       icon: <IconSettings className="h-5 w-5 text-white" />,
     },
-    {
-      label: "Logout",
-      href: "/logout",
-      icon: <IconArrowLeft className="h-5 w-5 text-white" />,
-    },
+    // {
+    //   label: "Logout",
+    //   href: "/logout",
+    //   icon: <IconArrowLeft className="h-5 w-5 text-white" />,
+    // },
   ];
   
 
@@ -84,7 +84,7 @@ return (
             href: "/admin",
             icon: (
               <img
-                src="https://assets.aceternity.com/manu.png"
+                src="/logoadmin.png"
                 className="h-7 w-7 rounded-full"
                 alt="Avatar"
               />

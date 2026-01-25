@@ -157,7 +157,7 @@ const testimonials = [
             <Link to={'clothdetails'}>  <button style={{ fontFamily: "Playfair Display, serif" }} className=' md:text-sm text-xs absolute md:left-124 left-57  md:top-139 top-71 -translate-x-1/9 -translate-y-1/9 border border-black text-black cursor-pointer px-6 py-1 md:hover:border-yellow-50 hover:border-yellow-50 md:hover:text-yellow-50 hover:text-yellow-50  active:border-white active:text-white   transition-all duration-300 ease-out' >View product</button></Link> */}
             <ProductCarousel/>
               <div className='md:mt-13 mt-4 flex  '>
-                <p style={{ fontFamily: 'Raleway, sans-serif' }} className='md:text-base text-xs italic'>Founder:<br />RETRO PREPPY</p>
+                <p style={{ fontFamily: 'Raleway, sans-serif' }} className='md:text-base text-xs italic'>Founder:<br />AMGITH SHAJI</p>
                 <p style={{ fontFamily: "Playfair Display, serif" }} className='md:me-10 me-5 md:text-2xl text-xs italic'> one of everything<br />really good</p>
               </div>
             </div>
