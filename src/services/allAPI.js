@@ -109,7 +109,7 @@ export const removeClothAPI = async (id,reqHeader)=>{
 
 // get my order clothes
 export const getMyOrderClothAPI = async (reqHeader)=>{
-    return await commonAPI("GET",`${serverURL}/my-order/cloth'`,{},reqHeader)
+    return await commonAPI("GET",`${serverURL}/my-order/cloth`,{},reqHeader)
 }
 
 // get cloth: admin getcloth
@@ -131,3 +131,15 @@ return await commonAPI("GET",`${serverURL}/admin-stores/all`,{},reqHeader)
 export const getAllAdminUsersAPI = async (reqHeader)=>{
     return await commonAPI("GET",`${serverURL}/admin-user/all`,{},reqHeader)
 }
+
+// cloth/:id/buy put req
+// export const purchaseClothAPI = async (id,reqHeader)=>{
+//     return await commonAPI("PUT",`${serverURL}/cloth/${id}/buy`,{},reqHeader)
+// }
+
+
+// cart checkout
+export const purchaseClothAPI = async (reqHeader) => {
+  return await commonAPI("POST", `${serverURL}/checkout`, {}, reqHeader)
+}
+

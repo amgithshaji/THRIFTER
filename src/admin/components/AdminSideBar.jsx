@@ -80,8 +80,8 @@ return (
       <div>
         <SidebarLink
           link={{
-            label: "Admin",
-            href: "/admin",
+            label: "Amgith",
+            // href: "/admin",
             icon: (
               <img
                 src="/logoadmin.png"

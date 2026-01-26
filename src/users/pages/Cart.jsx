@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { RxCross2 } from "react-icons/rx";
 import Footer from '@/component/Footer';
 import { cartContext } from '@/contextAPI/CartContext';
 import serverURL from '@/services/serverURL';
-import { addToCartAPI, decreaseCartAPI, removeCartAPI } from '@/services/allAPI'
+import { addToCartAPI, decreaseCartAPI, purchaseClothAPI, removeCartAPI } from '@/services/allAPI'
+import {loadStripe} from '@stripe/stripe-js';
+
 
 
 
@@ -16,12 +18,20 @@ import { addToCartAPI, decreaseCartAPI, removeCartAPI } from '@/services/allAPI'
 
 function Cart() {
   const { cartItems, fetchCart } = useContext(cartContext)
+
+  
   
 
 useEffect(() => {
   fetchCart()
 }, [])
 
+   useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])  
 // delete cart item
 const handleRemove = async (clothId) => {
   const token = sessionStorage.getItem("token")
@@ -84,6 +94,57 @@ const handleDecrease = async (clothId, quantity) => {
     console.log(err)
   }
 }
+
+// const makePayment = async ()=>{
+// // to view stripe payment window in browser
+// const stripe = await loadStripe('pk_test_51SkJCxAYqik1Z0w0Z9ozfyHlnSr76lwAR7N237eM4zUXI2Y6TV8jKqd4sNcZQaP9UAsFRRjhReOyFY5F1QwDrruU00vCHwonzC');
+// // api call for checkout
+// const token = sessionStorage.getItem("token")
+// if (token) {
+//   const reqHeader ={
+//    "Authorization" : `Bearer ${token}`
+//   }
+//   const result = await purchaseClothAPI(id,reqHeader)
+//   if (result.status==200) {
+//     const {checkoutURL} = result.data
+//     window.location.href = checkoutURL
+    
+//   }else{
+//     console.log(result);
+    
+//   }
+  
+// }
+// }
+
+const makePayment = async () => {
+  // load stripe
+  const stripe = await loadStripe(
+    'pk_test_51SkJCxAYqik1Z0w0Z9ozfyHlnSr76lwAR7N237eM4zUXI2Y6TV8jKqd4sNcZQaP9UAsFRRjhReOyFY5F1QwDrruU00vCHwonzC'
+  )
+
+  const token = sessionStorage.getItem("token")
+  if (!token) return
+
+  const reqHeader = {
+    "Authorization": `Bearer ${token}`
+  }
+
+  try {
+    // ✅ NO id here
+    const result = await purchaseClothAPI(reqHeader)
+
+    if (result.status === 200) {
+      const { checkoutURL } = result.data
+      window.location.href = checkoutURL
+    } else {
+      console.log(result)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
   return (
     <div  style={{ fontFamily: 'Raleway, sans-serif' }} className='md:h-470 h-530 ' >
@@ -198,7 +259,7 @@ const handleDecrease = async (clothId, quantity) => {
    
 
     </div>
-       <button className="mt-2 px-10 py-3 bg-black text-white text-[12px] hover:bg-white hover:text-black border border-black uppercase tracking-wide">
+       <button onClick={makePayment} className="mt-2 px-10 py-3 bg-black text-white text-[12px] hover:bg-white hover:text-black border border-black uppercase tracking-wide">
         Continue
       </button>
   </div>

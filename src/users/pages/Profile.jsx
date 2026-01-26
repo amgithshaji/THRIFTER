@@ -41,6 +41,13 @@ function Profile() {
     }
   },[])
 
+   useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])  
+
   const checkPasswordmatch = (data)=>{
 setConfirmPassword(data)
 userDetails.password == data ? setPasswordMatch(true):setPasswordMatch(false)

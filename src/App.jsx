@@ -19,6 +19,8 @@ import ClothStatus from './component/ClothStatus'
 import MyOrder from './component/MyOrder'
 import AdminProfile from './admin/pages/AdminProfile'
 import AdminResources from './admin/pages/AdminResources'
+import PaymentSuccess from './users/pages/PaymentSuccess'
+import PaymentFailed from './users/pages/PaymentFailed'
 
 
 
@@ -69,6 +71,9 @@ function App() {
           <Route path='/wishlist' element={<Wishlist/>} />
           <Route path='/clothStatus' element={<ClothStatus/>} />
           <Route path='/myorder' element={<MyOrder/>} />
+          <Route path='/user/payment-success' element={<PaymentSuccess/>} />
+          <Route path='/user/payment-failed' element={<PaymentFailed/>} />
+
 
            {/* <Route path='/admin/home' element={<AdminHome/>} /> */}
            {/* <Route path='/admin/resources' element={<AdminResources/>} /> */}

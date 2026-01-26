@@ -185,9 +185,18 @@ const handleProfileUpdate = async()=>{
                       className="w-full bg-neutral-900/50 border border-neutral-800 rounded-3xl py-5 pl-14 pr-6 text-sm focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-mono"
                     />
                   </div>
-                   {!passwordMatch && <div className=" mb-3  px-5 font-bold text-red-600 text-xs">
+                   {/* {!passwordMatch && <div className=" mb-3  px-5 font-bold text-red-600 text-xs">
                   *confirm password must match with new password
-            </div> }
+            </div> 
+            } */}
+            <div className="min-h-5">
+  {!passwordMatch && (
+    <div className="px-5 font-bold text-red-600 text-xs">
+      *confirm password must match with new password
+    </div>
+  )}
+</div>
+
                 </div>
               </div>
             </div>

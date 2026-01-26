@@ -260,7 +260,7 @@ function ClothDetails() {
     {
       clothDetailsCloth?.length>0?
       clothDetailsCloth?.map(cloth=>(
-         <div key={cloth?._id} className="group">
+         <div key={cloth?._id} className="group" hidden={cloth?.status!='approved'}>
         <div  className="relative bg-[#f5f5f5]">
           {/* <button className="absolute top-4 right-4 z-20 cursor-pointer">
         <span className="text-lg filter drop-shadow-sm"> <IoHeartOutline /></span>
@@ -287,7 +287,7 @@ function ClothDetails() {
 </button>
           
          <Link to={`/cloth/${cloth?._id}/details`}>
-              <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover"/>
+              <img key={cloth} src={cloth?.uploadimages?.length>0?`${serverURL}/uploads/${cloth.uploadimages[0]}`:"https://static.zara.net/assets/public/04a8/bba9/e2594c11bf63/bdd8182b57c9/05536259737-a3/05536259737-a3.jpg?ts=1767082163651&w=877"} alt={cloth?.clothname} className="w-full md:h-105 h-80 object-cover" />
          </Link>
         </div>
   

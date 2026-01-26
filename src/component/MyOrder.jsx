@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Footer from './Footer'
 import { Link } from 'react-router-dom'
 import { getMyOrderClothAPI } from '@/services/allAPI'
+import serverURL from '@/services/serverURL'
+
 
 function MyOrder() {
 const [myOrder,setMyOrder] = useState([])
