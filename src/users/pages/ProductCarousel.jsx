@@ -7,9 +7,9 @@ import "swiper/css";
 
 const products = [
   {
-    _id: "69596f05f375969775f9c30d",
-    image: "https://static.zara.net/assets/public/1990/b964/75374803a132/b430343eae09/05755052401-p/05755052401-p.jpg?ts=1767871788691&w=1024",
-    name: "Vintage Jacket",
+    _id: "6975d47babb869e845dae424",
+    image: "http://localhost:3000/uploads/image-1769329787375-cloth-8-2.jpg",
+    name: "pant",
   },
   {
     _id: "695a081f99acc02a4cef6159",

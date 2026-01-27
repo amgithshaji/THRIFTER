@@ -1,35 +1,162 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { 
   IconPackage, 
   IconUsers, 
   IconCurrencyRupee, 
   IconTrendingUp, 
   IconAlertCircle,
-  IconBuildingStore, // Most common export for store/shop
+  IconBuildingStore, 
   IconChevronRight 
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Slide } from 'react-toastify';
-
+import { getAllClothesAPI, getAllStoresAPI, getAllUsersAPI, getLatestAddClothesAPI, getLatestAddStoresAPI } from "@/services/allAPI";
 
 function AdminHome() {
+  const [allUsers,setAllUsers] = useState(0);
+  // console.log(allUsers);
+  const [allClothes, setAllClothes] = useState(0);
+  console.log(allClothes);
+  
+const [allStores, setAllStores] = useState(0);
+console.log(allStores);
 
-   const handleLogout = () => {
-     sessionStorage.clear()
-     toast.success("Logged out successfully")
-     setTimeout(() => {
-       navigate('/login')
-     }, 3000)
-   }
+const [latestClothes, setLatestClothes] = useState([]);
+// console.log(latestClothes);
 
-   const navigate = useNavigate()
+const [latestStores, setLatestStores] = useState([]);
+console.log(latestStores);
 
-  const stats = [
-    { label: "Total Revenue", value: "₹2,45,600", growth: "+12.5%", icon: <IconCurrencyRupee size={20}/> },
-    { label: "Active Listings", value: "842", growth: "+18", icon: <IconPackage size={20}/> },
-    { label: "Total Users", value: "1,248", growth: "+54", icon: <IconUsers size={20}/> },
-    { label: "Growth Rate", value: "24.3%", growth: "+4.2%", icon: <IconTrendingUp size={20}/> },
-  ];
+
+  
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    toast.success("Logged out successfully");
+    setTimeout(() => {
+      navigate('/login');
+    }, 3000);
+  };
+
+useEffect(() => {
+  getAllUsers();
+}, []);
+
+
+const getAllUsers = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await getAllUsersAPI(reqHeader);
+    console.log(result.data);
+
+    if (result.status === 200) {
+      setAllUsers(result.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  getAllClothes();
+}, []);
+
+const getAllClothes = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await getAllClothesAPI(reqHeader);
+    console.log(result.data);
+
+    if (result.status === 200) {
+      setAllClothes(result.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  getAllStores();
+}, []);
+
+const getAllStores = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await getAllStoresAPI(reqHeader);
+    console.log(result.data);
+
+    if (result.status === 200) {
+      setAllStores(result.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  getLatestAddedClothes();
+}, []);
+
+
+const getLatestAddedClothes = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await getLatestAddClothesAPI(reqHeader);
+    console.log(result.data);
+
+    if (result.status === 200) {
+      setLatestClothes(result.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  getLatestAddedStores();
+}, []);
+
+
+const getLatestAddedStores = async () => {
+  try {
+    const token = sessionStorage.getItem("token");
+
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    };
+
+    const result = await getLatestAddStoresAPI(reqHeader);
+    console.log(result.data);
+
+    if (result.status === 200) {
+      setLatestStores(result.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   return (
     <div className="p-4 md:p-8 space-y-8 text-white max-w-7xl mx-auto">
@@ -46,21 +173,65 @@ function AdminHome() {
 
       {/* Dynamic Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl hover:border-neutral-700 transition group shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-2 bg-neutral-800 rounded-lg group-hover:bg-white group-hover:text-black transition duration-300">
-                {stat.icon}
-              </div>
-              <span className="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
-                {stat.growth}
-              </span>
+        {/* Template for individual Stat Card */}
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl hover:border-neutral-700 transition group shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-neutral-800 rounded-lg group-hover:bg-white group-hover:text-black transition duration-300">
+               <IconTrendingUp size={20}/>
             </div>
-            <p className="text-sm text-gray-400 font-medium tracking-wide uppercase text-[10px]">{stat.label}</p>
-            <h2 className="text-2xl font-bold mt-1">{stat.value}</h2>
+            <span className="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
+              +32.6%
+            </span>
           </div>
-        ))}
+          <p className="text-sm text-gray-400 font-medium tracking-wide uppercase text-[10px]">Growth rate</p>
+          <h2 className="text-2xl font-bold mt-1">+54</h2>
+        </div>
+
+            {/* Template for individual Stat Card */}
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl hover:border-neutral-700 transition group shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-neutral-800 rounded-lg group-hover:bg-white group-hover:text-black transition duration-300">
+              <IconUsers size={20}/> 
+            </div>
+            <span className="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
+              +3.5%
+            </span>
+          </div>
+          <p className="text-sm text-gray-400 font-medium tracking-wide uppercase text-[10px]">Total Users</p>
+          <h2 className="text-2xl font-bold mt-1">+{allUsers}</h2>
+        </div>
+
+            {/* Template for individual Stat Card */}
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl hover:border-neutral-700 transition group shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-neutral-800 rounded-lg group-hover:bg-white group-hover:text-black transition duration-300">
+             <IconPackage size={20}/> 
+            </div>
+            <span className="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
+              +5.2%
+            </span>
+          </div>
+          <p className="text-sm text-gray-400 font-medium tracking-wide uppercase text-[10px]">Total Products</p>
+          <h2 className="text-2xl font-bold mt-1">+{allClothes}</h2>
+        </div>
+
+            {/* Template for individual Stat Card */}
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl hover:border-neutral-700 transition group shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-neutral-800 rounded-lg group-hover:bg-white group-hover:text-black transition duration-300">
+            <IconBuildingStore size={20} />
+            </div>
+            <span className="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
+              +2.5%
+            </span>
+          </div>
+          <p className="text-sm text-gray-400 font-medium tracking-wide uppercase text-[10px]">Total Store</p>
+          <h2 className="text-2xl font-bold mt-1">+{allStores}</h2>
+        </div>
+
+        
       </div>
+      
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Inventory Quality Control (Main Feed) */}
@@ -71,29 +242,32 @@ function AdminHome() {
           </div>
           
           <div className="space-y-4">
-            {[
-              { item: "Vintage 90s Nike Windbreaker", user: "SneakerHead99", price: "₹1,200", status: "Reviewing" },
-              { item: "Levi's 501 Original Denim", user: "DenimDoc", price: "₹2,500", status: "Reviewing" },
-              { item: "Retro Polaroid Camera", user: "AnalogVibes", price: "₹4,800", status: "Flagged" },
-            ].map((listing, idx) => (
-              <div key={idx} className="flex items-center justify-between p-4 bg-neutral-950/50 rounded-xl border border-neutral-800/50 hover:border-neutral-700 transition">
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 bg-neutral-800 rounded-lg flex items-center justify-center">
-                    <IconPackage size={20} className="text-gray-500" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{listing.item}</p>
-                    <p className="text-xs text-gray-500">by @{listing.user}</p>
-                  </div>
+            {/* Template for individual Approval Item */}
+           {
+            latestClothes?.length>0?
+            latestClothes?.map(cloth=>(
+               <div key={cloth?._id} className="flex items-center justify-between p-4 bg-neutral-950/50 rounded-xl border border-neutral-800/50 hover:border-neutral-700 transition">
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 bg-neutral-800 rounded-lg flex items-center justify-center">
+                  <IconPackage size={20} className="text-gray-500" />
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold">{listing.price}</p>
-                  <span className={`text-[10px] uppercase tracking-wider font-bold ${listing.status === 'Flagged' ? 'text-red-400' : 'text-yellow-400'}`}>
-                    {listing.status}
-                  </span>
+                <div>
+                  <p className="text-sm font-medium uppercase">{cloth?.clothname}</p>
+                  <p className="text-xs text-gray-500 uppercase">{cloth?.gender} </p>
                 </div>
               </div>
-            ))}
+              <div className="text-right">
+                <p className="text-sm font-semibold">₹{cloth?.price}</p>
+                <span className="text-[10px] uppercase tracking-wider font-bold text-yellow-400">
+                  {cloth?.status}
+                </span>
+              </div>
+            </div>
+              
+            ))
+            :
+            <p>no clothes</p>
+           }
           </div>
         </div>
 
@@ -103,22 +277,17 @@ function AdminHome() {
             <IconAlertCircle className="text-red-500" size={20} /> Urgent Tasks
           </h3>
           <div className="space-y-4">
+            {/* Template for Alert Item */}
             <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-xl">
               <p className="text-sm font-medium text-red-400">Payout Failure</p>
               <p className="text-xs text-gray-400 mt-1">3 sellers haven't received funds due to KYC issues.</p>
               <button className="mt-3 text-xs bg-red-500/10 text-red-400 px-3 py-1.5 rounded-md hover:bg-red-500/20 font-bold transition">Resolve Now</button>
             </div>
-            
-            <div className="p-4 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
-              <p className="text-sm font-medium text-yellow-400">New Dispute</p>
-              <p className="text-xs text-gray-400 mt-1">Order #8492: Buyer claims "Not as described".</p>
-              <button className="mt-3 text-xs bg-yellow-500/10 text-yellow-400 px-3 py-1.5 rounded-md hover:bg-yellow-500/20 font-bold transition">Open Case</button>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* --- NEW SECTION: FULL WIDTH STORE DETAILS --- */}
+      {/* Store Details Section */}
       <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 w-full shadow-lg">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -131,34 +300,36 @@ function AdminHome() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { store: "RetroVibe Co.", owner: "Sarah J.", items: "142", tier: "Gold" },
-            { store: "Hype Beast Hub", owner: "Mike D.", items: "84", tier: "Silver" },
-            { store: "Denim Den", owner: "Emma W.", items: "210", tier: "Platinum" },
-          ].map((shop, idx) => (
-            <div key={idx} className="flex items-center justify-between p-5 bg-neutral-950/40 rounded-xl border border-neutral-800/50 hover:border-neutral-700 transition group">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-400 group-hover:text-white transition">
-                  <IconBuildingStore size={26} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white tracking-tight">{shop.store}</p>
-                  <p className="text-xs text-neutral-500 italic">Managed by {shop.owner}</p>
-                </div>
+          {/* Template for individual Store Card */}
+          {
+            latestStores?.length>0?
+            latestStores?.map(stores=>(
+              <div className="flex items-center justify-between p-5 bg-neutral-950/40 rounded-xl border border-neutral-800/50 hover:border-neutral-700 transition group">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-400 group-hover:text-white transition">
+                <IconBuildingStore size={26} />
               </div>
-              <div className="text-right">
-                <p className="text-xs font-bold text-white">{shop.items} Items</p>
-                <span className="text-[9px] font-black uppercase tracking-widest text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
-                  {shop.tier}
-                </span>
+              <div>
+                <p className="text-sm font-bold text-white tracking-tight uppercase">{stores?.storename}</p>
+                <p className="text-xs text-neutral-500 italic">{stores?.storetagline}</p>
               </div>
             </div>
-          ))}
+            <div className="text-right">
+              {/* <p className="text-xs font-bold text-white">142 Items</p> */}
+              <span className="text-[9px] font-black uppercase tracking-widest text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                Verified
+              </span>
+            </div>
+          </div>
+            ))
+            :
+            <p>no stores</p>
+          }
         </div>
       </div>
-           {/* toast container */}
+
       <ToastContainer
-      style={{ zIndex: 9999999 }} 
+        style={{ zIndex: 9999999 }} 
         position="bottom-right"
         autoClose={2000}
         transition={Slide}

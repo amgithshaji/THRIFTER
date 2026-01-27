@@ -143,3 +143,27 @@ export const purchaseClothAPI = async (reqHeader) => {
   return await commonAPI("POST", `${serverURL}/checkout`, {}, reqHeader)
 }
 
+// get all  user count
+export const getAllUsersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-user/count`,{},reqHeader)
+}
+
+// get all  store count
+export const getAllStoresAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-stores/count`,{},reqHeader)
+}
+
+// get all  clothes count
+export const getAllClothesAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-clothes/count`,{},reqHeader)
+}
+
+// get last added 4 clothes
+export const getLatestAddClothesAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-clothes/latest`,{},reqHeader)
+}
+
+// get last added 3 stores
+export const getLatestAddStoresAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${serverURL}/admin-stores/latest`,{},reqHeader)
+}
