@@ -238,7 +238,8 @@ const getLatestAddedStores = async () => {
         <div className="lg:col-span-2 bg-neutral-900 border border-neutral-800 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold">Pending Approvals</h3>
-            <span className="text-xs text-blue-400 cursor-pointer hover:underline font-medium">View All Listings</span>
+            <span onClick={() => navigate("/admin/resources", { state: { activeTab: 1 } })}
+ className="text-xs text-blue-400 cursor-pointer hover:underline font-medium">View All Listings</span>
           </div>
           
           <div className="space-y-4">
@@ -272,20 +273,56 @@ const getLatestAddedStores = async () => {
         </div>
 
         {/* Actionable Alerts */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6">
-          <h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-white">
-            <IconAlertCircle className="text-red-500" size={20} /> Urgent Tasks
-          </h3>
-          <div className="space-y-4">
-            {/* Template for Alert Item */}
-            <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-xl">
-              <p className="text-sm font-medium text-red-400">Payout Failure</p>
-              <p className="text-xs text-gray-400 mt-1">3 sellers haven't received funds due to KYC issues.</p>
-              <button className="mt-3 text-xs bg-red-500/10 text-red-400 px-3 py-1.5 rounded-md hover:bg-red-500/20 font-bold transition">Resolve Now</button>
-            </div>
-          </div>
+    {/* Pure Design Card: Market Performance Visual */}
+    {/* Pure Design Card: Market Insights */}
+<div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between">
+  <div>
+    <h3 className="text-lg font-semibold mb-1 uppercase tracking-tight">Market Insights</h3>
+    <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold mb-8">Internal Benchmarks</p>
+    
+    <div className="space-y-8">
+      {/* Metric 1 - Green/Emerald Bar */}
+      <div>
+        <div className="flex justify-between text-xs mb-2">
+          <span className="text-neutral-400 uppercase tracking-widest">Retention</span>
+          <span className="text-white">92%</span>
+        </div>
+        <div className="h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden">
+          <div className="h-full w-11/12 bg-emerald-500 rounded-full"></div>
         </div>
       </div>
+
+      {/* Metric 2 - Blue Bar */}
+      <div>
+        <div className="flex justify-between text-xs mb-2">
+          <span className="text-neutral-400 uppercase tracking-widest">Growth</span>
+          <span className="text-white">54%</span>
+        </div>
+        <div className="h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden">
+          <div className="h-full w-2/4 bg-blue-500 rounded-full"></div>
+        </div>
+      </div>
+
+      {/* Hoverable Grid - Clean hover effect */}
+      <div className="grid grid-cols-2 gap-3 pt-4">
+        <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl hover:border-neutral-600 transition duration-300 cursor-default">
+          <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest">Region</p>
+          <p className="text-xs text-white mt-1 uppercase">Global</p>
+        </div>
+        <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl hover:border-neutral-600 transition duration-300 cursor-default">
+          <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest">Node</p>
+          <p className="text-xs text-white mt-1 uppercase">Primary</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="mt-8 py-2 border border-dashed border-neutral-800 rounded-lg text-center">
+    <p className="text-[10px] text-neutral-600 tracking-widest uppercase font-bold italic">Thrifter Studio ©</p>
+  </div>
+</div>
+       
+      </div> {/* This closes the lg:grid-cols-3 row */}
 
       {/* Store Details Section */}
       <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 w-full shadow-lg">
@@ -294,7 +331,7 @@ const getLatestAddedStores = async () => {
             <h3 className="text-lg font-semibold text-white">Latest Store Registrations</h3>
             <p className="text-xs text-neutral-500">Monitor new sellers entering the ecosystem.</p>
           </div>
-          <span className="text-xs text-blue-400 cursor-pointer hover:underline font-medium flex items-center gap-1">
+          <span onClick={() => navigate("/admin/resources", { state: { activeTab: 3 } })} className="text-xs text-blue-400 cursor-pointer hover:underline font-medium flex items-center gap-1">
             View All Shops <IconChevronRight size={14}/>
           </span>
         </div>

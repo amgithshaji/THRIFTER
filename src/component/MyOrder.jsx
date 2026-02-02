@@ -98,9 +98,9 @@ const getMyOrderCloth = async ()=>{
             Delivered. Loved once, re-loved.
           </p>
 
-          <button className="border me-3 border-black px-6 py-2 text-xs tracking-widest uppercase hover:bg-black hover:text-white transition">
+          {/* <button className="border me-3 border-black px-6 py-2 text-xs tracking-widest uppercase hover:bg-black hover:text-white transition">
             View Order
-          </button>
+          </button> */}
         </div>
 
       </div>

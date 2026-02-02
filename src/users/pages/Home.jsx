@@ -45,29 +45,29 @@ function Home() {
 
 const testimonials = [
   {
-    quote: "I’ve tried thrifting on Instagram and random websites, but Thrifter honestly feels different. Everything is well-organized, the pieces feel curated, and I actually enjoy scrolling instead of feeling overwhelmed. Found some amazing streetwear pieces at prices I couldn’t believe.",
-    name: "Aarav",
-    title: "Streetwear Buyer",
+    quote: "I’ve tried thrifting on IG and random sites, but Thrifter feels like a curated archive. Everything is well-organized, the pieces feel intentional, and I actually enjoy the hunt. Found some rare streetwear grails at prices I couldn’t believe.",
+    name: "ZAYN",
+    title: "Archive Enthusiast",
   },
   {
-    quote: "As someone who wanted to sell clothes without the headache of constant DMs, Thrifter was a relief. Uploading products was simple, the interface looks clean, and my items got visibility quickly. It feels like a proper marketplace, not just another resale page.",
-    name: "Meera",
-    title: "Verified Seller",
+    quote: "Selling without the headache of 'is this available' DMs was the goal. Thrifter is a relief—clean interface, fast visibility, and a professional seller dashboard. It’s a proper marketplace for serious resellers.",
+    name: "SARA",
+    title: "Premium Reseller",
   },
   {
-    quote: "What I love most is the vibe. Thrifter doesn’t feel cheap or cluttered like many thrift platforms. It feels intentional and aesthetic. I’ve picked up vintage jackets and unique pieces that I’d never find in normal stores.",
-    name: "Rohan",
-    title: "Vintage Collector",
+    quote: "The aesthetic is what got me. Thrifter doesn’t feel cluttered or cheap. It’s a high-end environment for vintage finds. I’ve picked up leather jackets and unique silhouettes that you just don't see in fast fashion.",
+    name: "ISHAN",
+    title: "Vintage Curator",
   },
   {
-    quote: "Shopping sustainably usually feels boring, but Thrifter somehow makes it exciting. Knowing that I’m reusing fashion while still staying on trend is a win. It’s become my go-to place whenever I’m looking for something unique.",
-    name: "Ananya",
-    title: "Eco-Conscious Shopper",
+    quote: "Sustainable shopping usually feels like a compromise, but Thrifter makes it a flex. Staying on-trend while being eco-conscious is the vibe. This is officially my go-to for building a unique, ethical rotation.",
+    name: "KIARA",
+    title: "Fashion Content Creator",
   },
   {
-    quote: "From browsing clothes to adding items to my wishlist, everything feels smooth and premium. It doesn’t feel like a student project at all. Thrifter genuinely feels like a platform I’d keep using long-term.",
-    name: "Karthik",
-    title: "Regular Buyer",
+    quote: "The UX is elite. From the wishlist functionality to the checkout, it feels incredibly smooth and premium. It doesn't feel like a project—it feels like the future of community-driven fashion.",
+    name: "ARYAN",
+    title: "Streetwear Stylist",
   },
 ];
 

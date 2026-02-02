@@ -184,45 +184,52 @@ if (result.status==200){
   </div>
       </div>
       :
-  <div className="min-h-screen w-full flex items-center justify-center bg-white">
-      <div className="w-full max-w-md text-center px-6">
+      <div className="min-h-screen w-full flex items-center justify-center bg-white text-black antialiased">
+  <div className="w-full max-w-lg px-6">
+    {/* Minimalist Top Border Decoration */}
+    <div className="w-12 h-px bg-black mx-auto mb-12"></div>
 
-        {/* Icon / Illustration */}
-        <div className="flex justify-center mb-6">
-          <img
-            src="https://cdn.pixabay.com/animation/2023/06/13/15/12/15-12-30-710_512.gif"
-            alt="unauthorized"
-            className="w-52"
-          />
-        </div>
+    <div className="text-center">
+      {/* Editorial Header */}
+      <h1 className="text-[10px] tracking-[0.4em] font-bold uppercase mb-4 text-neutral-400">
+        Authentication Required
+      </h1>
+      
+      <h2 className="text-3xl md:text-4xl font-extralight tracking-tighter leading-none mb-8">
+        COLLECTIONS <br /> 
+        <span className="italic font-serif">Restricted Access</span>
+      </h2>
 
-        {/* Headline */}
-        <h1 className="text-2xl tracking-widest font-semibold mb-3">
-          ACCESS RESTRICTED
-        </h1>
+      {/* Editorial Description */}
+      <p className="text-[11px] uppercase tracking-[0.2em] leading-relaxed max-w-xs mx-auto mb-12 text-neutral-500">
+        Please sign in to access the <span className="text-black font-semibold">members-only</span> thrift environment and view the current season.
+      </p>
 
-        {/* Sub text */}
-        <p className="text-sm text-gray-600 mb-6">
-          Looks like you're trying to unlock a <span className="font-semibold">members-only thrift zone</span>.
-        </p>
-
-        {/* Login CTA */}
-      <Link to={'/login'}>
-          <button
-            className="w-full border border-black py-2 text-sm tracking-widest hover:bg-black hover:text-white transition mb-3"
-          >
-            LOGIN TO CONTINUE
+      {/* Zara-Style Action Stack */}
+      <div className="flex flex-col space-y-3">
+        <Link to="/login" className="w-full">
+          <button className="w-full bg-black text-white py-4 text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-[#1a1a1a] transition-colors duration-500">
+            Log In
           </button>
-      </Link>
-
-        {/* Home CTA */}
-        <Link to="/">
-          <p className="text-xs underline tracking-wider">
-            Return to Homepage
-          </p>
+        </Link>
+        
+        <Link to="/" className="w-full">
+          <button className="w-full border border-neutral-200 py-4 text-[11px] font-bold tracking-[0.3em] uppercase hover:border-black transition-colors duration-500">
+            Back to Home
+          </button>
         </Link>
       </div>
-            </div>
+
+      {/* Footer Branding */}
+      <div className="mt-24">
+        <p className="text-[10px] tracking-[0.5em] font-light uppercase opacity-30">
+          Thrifter Studio © 2024
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  
 
       }
         <Footer/>

@@ -61,12 +61,15 @@ function App() {
               }
             </div>
           } />
-          <Route path='/cloth/:id/details' element={<ClothDetails/>} />
+           <Route path='/login' element={<Auth/>} />
+          <Route path='/register' element={<Auth insideRegister ={true} />} />
           <Route path='/cloth' element={<Cloth/>} />
+
+
+
+          <Route path='/cloth/:id/details' element={<ClothDetails/>} />
           <Route path='/seller/:sellermail/details' element={<Seller/>} />
           <Route path='/profile' element={<Profile/>} />
-          <Route path='/login' element={<Auth/>} />
-          <Route path='/register' element={<Auth insideRegister ={true} />} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/wishlist' element={<Wishlist/>} />
           <Route path='/clothStatus' element={<ClothStatus/>} />
@@ -75,9 +78,7 @@ function App() {
           <Route path='/user/payment-failed' element={<PaymentFailed/>} />
 
 
-           {/* <Route path='/admin/home' element={<AdminHome/>} /> */}
-           {/* <Route path='/admin/resources' element={<AdminResources/>} /> */}
-           {/* <Route path='/admin/profile' element={<AdminProfile/>} /> */}
+          
            <Route path="/admin/home" element={<AdminLayout  />}>
            <Route index element={<AdminHome />} />
            </Route>

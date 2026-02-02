@@ -12,10 +12,13 @@ import {
 import { getAllAdminClothAPI, getAllAdminStoreAPI, getAllAdminUsersAPI, updateClothStatusAPI } from '@/services/allAPI';
 import serverURL from '@/services/serverURL';
 import { ToastContainer, toast, Slide } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 
 
 function AdminResources() {
+  const location = useLocation();
+
   const [tab, setTab] = useState(1); // 1: Clothes, 2: Users, 3: Stores
   const [allClothes,setAllClothes]= useState([])
   console.log(allClothes);
@@ -26,6 +29,11 @@ function AdminResources() {
   const [allUsers,setAllUsers] = useState([])
   console.log(allUsers);
   
+useEffect(() => {
+  if (location.state?.activeTab !== undefined) {
+    setTab(location.state.activeTab);
+  }
+}, [location.state]);
 
 
   

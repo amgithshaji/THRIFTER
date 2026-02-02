@@ -12,9 +12,9 @@ const techLogos = [
 // Alternative with image sources
 const imageLogos = [
   { src: "/logoloop1.png", alt: "Company 1", href: "https://company1.com" },
-  // { src: "/logoloop2.png", alt: "Company 1", href: "https://company1.com" },
-  // { src: "/logoloop3.png", alt: "Company 1", href: "https://company1.com" },
-  // { src: "/logoloop4.png", alt: "Company 1", href: "https://company1.com" },
+  { src: "/logo22.png", alt: "Company 1", href: "https://company1.com" },
+  { src: "/logo33.png", alt: "Company 1", href: "https://company1.com" },
+  { src: "/logo44.png", alt: "Company 1", href: "https://company1.com" },
   // { src: "/logoloop5.png", alt: "Company 1", href: "https://company1.com" },
 
 
