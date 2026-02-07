@@ -332,7 +332,7 @@ function ClothDetails() {
          </Link>
         </div>
   
-        <div className="mt-4 text-[12px] tracking-wide">
+        <div className="mt-4 text-[12px] tracking-wide uppercase">
           <p className="mb-1">{cloth?.clothname}</p>
           <p className="font-medium">₹ {cloth?.price}</p>
         </div>

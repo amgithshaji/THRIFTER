@@ -21,7 +21,7 @@ function Pnf() {
             Page Not Found
           </h2>
           
-          <p className="text-[10px] tracking-widest max-w-[280px] leading-relaxed text-gray-500 mb-12">
+          <p className="text-[10px] tracking-widest max-w-xs leading-relaxed text-gray-500 mb-12">
             THE ITEM YOU ARE LOOKING FOR IS NO LONGER IN OUR COLLECTION OR HAS BEEN ARCHIVED.
           </p>
           

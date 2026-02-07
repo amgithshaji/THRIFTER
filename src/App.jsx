@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 
 import PreLoader from './component/PreLoader'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Home from './users/pages/Home'
 import ClothDetails from './users/pages/ClothDetails'
 import Cloth from './users/pages/Cloth'
@@ -23,12 +23,14 @@ import PaymentSuccess from './users/pages/PaymentSuccess'
 import PaymentFailed from './users/pages/PaymentFailed'
 import Pnf from './pages/Pnf'
 import About from './users/pages/About'
+import { routeGuardContext } from './contextAPI/AuthContext'
 
 
 
 function App() {
   const [loader, setLoader] = useState(true)
   const [fadeOutLoader, setFadeOutLoader] = useState(false)
+  const {role,setAuthorized} = useContext(routeGuardContext)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -63,38 +65,49 @@ function App() {
               }
             </div>
           } />
-           <Route path='/login' element={<Auth/>} />
-          <Route path='/register' element={<Auth insideRegister ={true} />} />
-          <Route path='/cloth' element={<Cloth/>} />
-          <Route path='/about' element={<About/>} />
+
+        
+          <>
+             <Route path='/login' element={<Auth/>} />
+            <Route path='/register' element={<Auth insideRegister ={true} />} />
+            <Route path='/cloth' element={<Cloth/>} />
+            <Route path='/about' element={<About/>} />
+  
+          </>
+        
 
 
-
-
-          <Route path='/cloth/:id/details' element={<ClothDetails/>} />
-          <Route path='/seller/:sellermail/details' element={<Seller/>} />
-          <Route path='/profile' element={<Profile/>} />
-          <Route path='/cart' element={<Cart/>} />
-          <Route path='/wishlist' element={<Wishlist/>} />
-          <Route path='/clothStatus' element={<ClothStatus/>} />
-          <Route path='/myorder' element={<MyOrder/>} />
-          <Route path='/user/payment-success' element={<PaymentSuccess/>} />
-          <Route path='/user/payment-failed' element={<PaymentFailed/>} />
+         { 
+          role=='user' &&
+         <>
+            <Route path='/cloth/:id/details' element={<ClothDetails/>} />
+            <Route path='/seller/:sellermail/details' element={<Seller/>} />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/cart' element={<Cart/>} />
+            <Route path='/wishlist' element={<Wishlist/>} />
+            <Route path='/clothStatus' element={<ClothStatus/>} />
+            <Route path='/myorder' element={<MyOrder/>} />
+            <Route path='/user/payment-success' element={<PaymentSuccess/>} />
+            <Route path='/user/payment-failed' element={<PaymentFailed/>} />
+         </>
+          }
 
 
           
-           <Route path="/admin/home" element={<AdminLayout  />}>
-           <Route index element={<AdminHome />} />
-           </Route>
-           <Route path="/admin/resources" element={<AdminLayout />}>
-           <Route index element={<AdminResources />} />
-          </Route>
-            <Route path="/admin/profile" element={<AdminLayout />}>
-           <Route index element={<AdminProfile/>} />
-
-
-          </Route>
-  
+      {    
+      role=="admin" &&
+             <>
+             <Route path="/admin/home" element={<AdminLayout  />}>
+             <Route index element={<AdminHome />} />
+             </Route>
+             <Route path="/admin/resources" element={<AdminLayout />}>
+             <Route index element={<AdminResources />} />
+             </Route>
+              <Route path="/admin/profile" element={<AdminLayout />}>
+             <Route index element={<AdminProfile/>} />
+             </Route>
+             </>
+      }
           <Route path='/*' element={<Pnf/>} />
       </Routes>
       {!loader && !isAdminPage && <Chatbot />}

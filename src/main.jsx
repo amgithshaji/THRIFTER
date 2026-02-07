@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import ShareContext from './contextAPI/ShareContext'
 import WishlistContextProvider from './contextAPI/WishlistContext'
 import CartContextProvider from './contextAPI/CartContext'
+import AuthContext from './contextAPI/AuthContext'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -17,7 +18,9 @@ createRoot(document.getElementById('root')).render(
      <ShareContext>
      <WishlistContextProvider>
      <CartContextProvider>
-             <App/>
+        <AuthContext>   
+            <App/>
+        </AuthContext>
      </CartContextProvider>  
    </WishlistContextProvider>    
     </ShareContext>    
