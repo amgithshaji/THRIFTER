@@ -9,7 +9,7 @@ import { FaEye } from 'react-icons/fa6'
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-// import { routeGuardContext } from '@/contextAPI/AuthContext';
+import { routeGuardContext } from '@/contextAPI/AuthContext';
 
 
 
@@ -18,7 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 
 
 function Auth({insideRegister}) {
-  // const{role,setAuthorized}= useContext(routeGuardContext)
+  const{role,setAuthorized}= useContext(routeGuardContext)
   const [viewPassword, setViewPassword] = useState(false)
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
@@ -73,7 +73,7 @@ function Auth({insideRegister}) {
           toast.success("login successfull")
           sessionStorage.setItem("token", result.data.token)
           sessionStorage.setItem("user", JSON.stringify(result.data.user))
-          // setAuthorized(true)
+          setAuthorized(true)
           setTimeout(() => {
             if (result.data.user.role == "admin") {
               navigate('/admin/home')
