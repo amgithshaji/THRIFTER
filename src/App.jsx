@@ -67,24 +67,25 @@ function App() {
           } />
 
         
-          <>
+          
              <Route path='/login' element={<Auth/>} />
             <Route path='/register' element={<Auth insideRegister ={true} />} />
             <Route path='/cloth' element={<Cloth/>} />
             <Route path='/about' element={<About/>} />
-  
-          </>
+           <Route path='/cloth/:id/details' element={<ClothDetails/>} />
+           <Route path='/cart' element={<Cart/>} />
+            <Route path='/wishlist' element={<Wishlist/>} />
+           
+          
         
 
 
          { 
           role=='user' &&
          <>
-            <Route path='/cloth/:id/details' element={<ClothDetails/>} />
             <Route path='/seller/:sellermail/details' element={<Seller/>} />
             <Route path='/profile' element={<Profile/>} />
-            <Route path='/cart' element={<Cart/>} />
-            <Route path='/wishlist' element={<Wishlist/>} />
+             
             <Route path='/clothStatus' element={<ClothStatus/>} />
             <Route path='/myorder' element={<MyOrder/>} />
             <Route path='/user/payment-success' element={<PaymentSuccess/>} />

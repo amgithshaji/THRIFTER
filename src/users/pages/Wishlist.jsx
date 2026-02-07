@@ -14,9 +14,21 @@ import { addToCartAPI } from '@/services/allAPI';
 
 function Wishlist() {
   const { fetchCart } = useContext(cartContext)
+  const [token,setToken] = useState("")
+  console.log(token);
+  
 
 
   const { wishlist, removeFromWishlist, fetchWishlist } = useContext(wishlistContext)
+
+useEffect(()=>{
+  if (sessionStorage.getItem("token")) {
+    const userToken = sessionStorage.getItem("token")
+    setToken(userToken)
+    
+  }
+
+},[])
 
     useEffect(() => {
   window.scrollTo({
@@ -69,6 +81,8 @@ const handleAddToCartFromWishlist = async (clothId) => {
   return (
       <div style={{ fontFamily: 'Raleway, sans-serif' }}>
                 <Header/>
+{
+  token?
 <div className="w-full bg-white">
   {/* Category buttons */}
   <div className="flex gap-4 px-10 pt-9 md:ms-20 md:text-[12px] text-[10px] text-bold tracking-[0.09em] uppercase md:mt-40 mt-25 ">
@@ -150,6 +164,53 @@ const handleAddToCartFromWishlist = async (clothId) => {
 
 
 </div>
+  :
+       <div className="min-h-screen w-full flex items-center justify-center bg-white text-black antialiased">
+    <div className="w-full max-w-lg px-6">
+      {/* Minimalist Top Border Decoration */}
+      <div className="w-12 h-px bg-black mx-auto mb-12"></div>
+  
+      <div className="text-center">
+        {/* Editorial Header */}
+        <h1 className="text-[10px] tracking-[0.4em] font-bold uppercase mb-4 text-neutral-400">
+          Authentication Required
+        </h1>
+        
+        <h2 className="text-3xl md:text-4xl font-extralight tracking-tighter leading-none mb-8">
+          WISHLIST <br /> 
+          <span className="italic font-serif">Restricted Access</span>
+        </h2>
+  
+        {/* Editorial Description */}
+        <p className="text-[11px] uppercase tracking-[0.2em] leading-relaxed max-w-xs mx-auto mb-12 text-neutral-500">
+          Please sign in to access the <span className="text-black font-semibold">members-only</span> thrift environment and view the current season.
+        </p>
+  
+        {/* Zara-Style Action Stack */}
+        <div className="flex flex-col space-y-3">
+          <Link to="/login" className="w-full">
+            <button className="w-full bg-black text-white py-4 text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-[#1a1a1a] transition-colors duration-500">
+              Log In
+            </button>
+          </Link>
+          
+          <Link to="/" className="w-full">
+            <button className="w-full border border-neutral-200 py-4 text-[11px] font-bold tracking-[0.3em] uppercase hover:border-black transition-colors duration-500">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+  
+        {/* Footer Branding */}
+        <div className="mt-24">
+          <p className="text-[10px] tracking-[0.5em] font-light uppercase opacity-30">
+            Thrifter Studio © 2024
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+}
 <Footer/>
     </div>
   )
