@@ -1,6 +1,6 @@
 import Chroma from '@/component/Chroma'
 import Header from '@/users/components/Header'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import { googleLoginAPI, loginAPI, registerAPI } from '@/services/allAPI';
@@ -9,6 +9,7 @@ import { FaEye } from 'react-icons/fa6'
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
+// import { routeGuardContext } from '@/contextAPI/AuthContext';
 
 
 
@@ -17,7 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 
 
 function Auth({insideRegister}) {
-
+  // const{role,setAuthorized}= useContext(routeGuardContext)
   const [viewPassword, setViewPassword] = useState(false)
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
@@ -72,6 +73,7 @@ function Auth({insideRegister}) {
           toast.success("login successfull")
           sessionStorage.setItem("token", result.data.token)
           sessionStorage.setItem("user", JSON.stringify(result.data.user))
+          // setAuthorized(true)
           setTimeout(() => {
             if (result.data.user.role == "admin") {
               navigate('/admin/home')
