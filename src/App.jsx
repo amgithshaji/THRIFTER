@@ -21,6 +21,8 @@ import AdminProfile from './admin/pages/AdminProfile'
 import AdminResources from './admin/pages/AdminResources'
 import PaymentSuccess from './users/pages/PaymentSuccess'
 import PaymentFailed from './users/pages/PaymentFailed'
+import Pnf from './pages/Pnf'
+import About from './users/pages/About'
 
 
 
@@ -64,6 +66,8 @@ function App() {
            <Route path='/login' element={<Auth/>} />
           <Route path='/register' element={<Auth insideRegister ={true} />} />
           <Route path='/cloth' element={<Cloth/>} />
+          <Route path='/about' element={<About/>} />
+
 
 
 
@@ -87,9 +91,11 @@ function App() {
           </Route>
             <Route path="/admin/profile" element={<AdminLayout />}>
            <Route index element={<AdminProfile/>} />
+
+
           </Route>
   
-  
+          <Route path='/*' element={<Pnf/>} />
       </Routes>
       {!loader && !isAdminPage && <Chatbot />}
 

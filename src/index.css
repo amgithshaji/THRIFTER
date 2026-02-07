@@ -161,6 +161,7 @@
 
 
 
+
 /* navbar */
 .staggered-menu-wrapper {
   position: relative;
@@ -184,7 +185,7 @@
 
 }
 
-.staggered-menu-header {
+/* .staggered-menu-header {
   position: absolute;
   top: 0;
   left: 0;
@@ -196,6 +197,21 @@
   background: transparent;
   pointer-events: none;
   z-index: 10001;
+} */
+
+
+.staggered-menu-header {
+  position: fixed; /* Changed from absolute to fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em;
+  background: transparent;
+  pointer-events: none;
+  z-index: 11000 !important; /* Bumped up higher */
 }
 
 .staggered-menu-header > * {
@@ -220,7 +236,7 @@
 
 }
 
-.sm-toggle {
+/* .sm-toggle {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -234,6 +250,23 @@
   overflow: visible;
     pointer-events: auto;
 
+} */
+
+.sm-toggle {
+  position: relative;
+  z-index: 11001 !important; /* Higher than the header */
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: color 0.3s ease;
+}
+
+[data-open] .sm-toggle {
+  color: #000000 !important;
+}
+
+[data-open] .sm-icon-line {
+  background-color: #000000 !important;
 }
 
 .sm-toggle:focus-visible {
@@ -533,6 +566,7 @@
     filter: invert(100%);
   }
 }
+
 
 
 

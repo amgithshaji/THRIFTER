@@ -25,7 +25,7 @@ function Header({ insideclothsearch = false }) {
   return (
     <div>
       
-            <StaggeredMenu
+            {/* <StaggeredMenu
                insideclothsearch={insideclothsearch}
               position="fixed"
               items={menuItems}
@@ -42,7 +42,30 @@ function Header({ insideclothsearch = false }) {
               accentColor="#ff6b6b"
               onMenuOpen={() => console.log('Menu opened')}
               onMenuClose={() => console.log('Menu closed')}
-            />
+            /> */}
+
+            
+
+<StaggeredMenu
+  insideclothsearch={insideclothsearch}
+  position="fixed"
+  items={menuItems}
+  socialItems={socialItems}
+  isFixed={true}
+  displaySocials={true}
+  displayItemNumbering={true}
+  menuButtonColor="#000"
+  
+  /* CHANGE THIS LINE BELOW */
+  openMenuButtonColor="#000" // Changed from #fff to #000
+  
+  changeMenuColorOnOpen={true}
+  colors={['#B19EEF', '#5227FF']}
+  logoUrl="/logo2.png"
+  accentColor="#ff6b6b"
+  onMenuOpen={() => console.log('Menu opened')}
+  onMenuClose={() => console.log('Menu closed')}
+/>
     </div>
   )
 }

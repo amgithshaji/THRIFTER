@@ -33,6 +33,13 @@ const filteredClothes =
 
 },[searchKey])
 
+ useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
+}, [])
+
 const getAllClothes = async (token)=>{
   const reqHeader = {
   "Authorization" : `Bearer ${token}`

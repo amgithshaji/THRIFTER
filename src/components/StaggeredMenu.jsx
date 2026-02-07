@@ -451,6 +451,7 @@ const handleSearchMobile = ()=>{
 
 
 {/* --- Combined Navigation Actions Container --- */}
+{!open && (
 <div className="absolute md:me-24 top-0 right-0 z-50 flex items-center gap-4 md:gap-6 px-4 py-1 md:mt-12 mt-2 pointer-events-auto">
   
   {/* Search (Desktop) */}
@@ -509,6 +510,7 @@ const handleSearchMobile = ()=>{
 
   </Link>
 </div>
+)}
 {/* --- End of Navigation Actions --- */}
 
 
