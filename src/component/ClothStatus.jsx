@@ -152,7 +152,7 @@ const deleteCloth = async (id)=>{
     Your thrift journey starts here. Upload your first piece and let it find a new home.
   </p>
 
-  <Link to={'/cloth'} className="border border-black px-6 py-2 text-xs tracking-widest uppercase hover:bg-black hover:text-white transition">
+  <Link to={'/profile'} className="border border-black px-6 py-2 text-xs tracking-widest uppercase hover:bg-black hover:text-white transition">
     Upload Your First Item
   </Link>
 </div>
